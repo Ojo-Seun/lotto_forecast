@@ -1,0 +1,18 @@
+.header {
+  height: 10vh;
+  background-color: var(--primary_color_dark);
+  display: flex;
+  justify-content: space-between;
+}
+
+.header :is(.logo, .mode) {
+  width: 10em;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo img {
+  object-fit: contain;
+}
