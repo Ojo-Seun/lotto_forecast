@@ -1,0 +1,34 @@
+.pagenation {
+  margin: 20px 0;
+  background-color: var(--secondary_color);
+  padding: 1em;
+  border-radius: 1em;
+}
+.pagenation button {
+  outline: none;
+  padding: 16px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+}
+
+.pagenation button:not(.activePage, .disabled, .active) {
+  background-color: var(--primary_color_dark);
+  color: white;
+}
+
+.pagenation button:hover:not(.activePage, .disabled, .active) {
+  background-color: blue;
+  color: white;
+}
+
+.pagenation button.active {
+  background-color: blue;
+  color: white;
+}
+.activePage {
+  background-color: white;
+  color: aqua;
+  font-weight: bold;
+}

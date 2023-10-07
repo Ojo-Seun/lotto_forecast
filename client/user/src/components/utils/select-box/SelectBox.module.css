@@ -1,0 +1,62 @@
+.container {
+  width: 15em;
+  position: relative;
+}
+
+.selectionBox {
+  position: relative;
+  padding: 0.5em;
+  background-color: var(--active_color);
+  border-radius: 10px;
+  cursor: pointer;
+  padding-right: 0.9em;
+}
+
+.option,
+.options,
+.selectionBox,
+.title {
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.selectionBox.active {
+  border-radius: 10px 10px 0px 0;
+}
+.options {
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  overflow-y: scroll;
+  border-radius: 0px 0 10px 10px;
+  scroll-behavior: smooth;
+  z-index: 5;
+  max-height: 40vh;
+}
+
+.selectionBox::after {
+  position: absolute;
+  content: "";
+  border: 0.7em solid transparent;
+  border-color: white transparent transparent transparent;
+  top: 16px;
+  right: 10px;
+  transition: all 0.5s;
+}
+
+.selectionBox.active::after {
+  border-color: transparent transparent white transparent;
+  top: 0px;
+}
+
+.option {
+  padding: 0.5em;
+  border-top: 1px solid white;
+  background-color: var(--active_color);
+  cursor: pointer;
+}
+.option:hover {
+  background-color: aliceblue;
+}

@@ -1,47 +1,38 @@
-import logo from "./logo.svg"
-import { Counter } from "./features/counter/Counter"
+import { lazy, Suspense } from "react"
 import "./App.css"
-import { useEffect } from "react"
-import axios from "axios"
-import config from "./app_config"
+import Header from "./components/Header/Header"
+import Navbar from "./components/NavBar/Navbar"
+import Footer from "./components/Footer/Footer"
+import { AnimatePresence } from "framer-motion"
+import { Route, Routes, useLocation } from "react-router-dom"
+import LoadingIndicator from "./components/utils/LodingIndicator"
+
+const LazyHome = lazy(() => import("./pages/Home/Home"))
+const LazyForecast2 = lazy(() => import("./pages/Forecast/Forecast2/ForecastWith2WeeksResults"))
+const LazyForecast3 = lazy(() => import("./pages/Forecast/Forecast3/ForecastWith3WeeksResults"))
+const LazyNonFound = lazy(() => import("./pages/404"))
 
 function App() {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    console.log(file)
-  }
-
-  // useEffect(() => {
-  //   const payload = {
-  //     game: "NATIONAL",
-  //   }
-  //   axios
-  //     .post(`${URL}/games/data`, { payload })
-  //     .then((res) => {
-  //       console.log(res.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response?.data)
-  //     })
-  // }, [])
-
+  const location = useLocation()
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      <div id="headers">
+        <Header />
+        <Navbar />
+      </div>
       <main>
-        <p>
-          <label htmlFor="file">Upload File</label>
-          <input
-            onChange={handleChange}
-            type="file"
-            accept=".xlsx"
-            id="file"
-            name="file"
-          />
-        </p>
+        <Suspense fallback={<LoadingIndicator />}>
+          <AnimatePresence>
+            <Routes location={location} key={location.key}>
+              <Route path="/" element={<LazyHome />} />
+              <Route path="forecast-2" element={<LazyForecast2 />} />
+              <Route path="forecast-3" element={<LazyForecast3 />} />
+              <Route path="*" element={<LazyNonFound />} />
+            </Routes>
+          </AnimatePresence>
+        </Suspense>
       </main>
+      <Footer />
     </div>
   )
 }

@@ -55,7 +55,7 @@ function Operations() {
       .catch((err) => {
         const ERROR = err.response?.data?.message || err?.message;
         setGameDetails((prev) => ({ ...prev, error: { err: true, message: ERROR } }));
-        console.log(err);
+        console.log({ ERROR });
       })
       .finally(() => {
         setGameDetails((prev) => ({ ...prev, loading: false }));

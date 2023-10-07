@@ -15,11 +15,13 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
+    "@types/react-router-dom": "^5.3.3",
     "axios": "^1.5.0",
     "framer-motion": "^10.16.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.1"
+    "react-redux": "^8.0.1",
+    "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.2.0",
@@ -43,7 +45,9 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:prettier/recommended",
+      "prettier-config-nick"
     ],
     "plugins": [
       "prettier"
@@ -53,5 +57,9 @@
       "react/jsx-no-target-blank": "off"
     }
   },
-  "prettier": "prettier-config-nick"
+  "prettier": {
+    "singleQuote": false,
+    "semi": false,
+    "printWidth": 200
+  }
 }

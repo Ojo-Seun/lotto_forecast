@@ -1,0 +1,62 @@
+.container {
+  overflow: hidden;
+}
+
+.selectBoxies {
+  margin-top: 1em;
+}
+.selectBoxies > p {
+  margin-bottom: 1em;
+}
+.title {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.selections {
+  width: 60%;
+  display: flex;
+  margin: auto;
+}
+
+.selections:not(.weeksToAdd) {
+  justify-content: space-between;
+}
+.weeksToAdd {
+  justify-content: center;
+}
+.lastEvent {
+  width: 100%;
+}
+
+.eventsToSend {
+  padding: 1em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2em;
+  align-items: center;
+}
+#btn {
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#submit {
+  display: flex;
+  outline: none;
+  background-color: #282c34;
+  color: aqua;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2px;
+  font-weight: bold;
+  border: none;
+}

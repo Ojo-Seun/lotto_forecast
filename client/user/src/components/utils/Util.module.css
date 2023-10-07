@@ -1,0 +1,61 @@
+.loadingIndicator {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgb(50, 50, 50);
+  border-top: 2px solid aqua;
+  animation: spin 0.5s linear 0s infinite;
+  background-color: transparent;
+  margin: auto;
+}
+
+#submit {
+  display: flex;
+  outline: none;
+  background-color: #282c34;
+  color: aqua;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2px;
+  font-weight: bold;
+}
+
+#luck {
+  position: fixed;
+  font-size: 2em;
+  font-style: italic;
+  font-weight: bold;
+  right: 2em;
+  bottom: 12vh;
+
+  color: aqua;
+  animation: glow 1s linear 0s infinite;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 2px 2px 4px white;
+  }
+  100% {
+    text-shadow: 2px 2px 4px black;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(90deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
