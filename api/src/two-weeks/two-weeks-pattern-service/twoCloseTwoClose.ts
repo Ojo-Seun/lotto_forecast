@@ -24,7 +24,7 @@ export class TwoCloseTwoClose {
       const res = await this.twoWeeksSearchService.searchInOneGame(this.twoWeeksMatchFns, queries)
       return res
     } catch (error: any) {
-      throw new HttpException(error.message + ' from searchInOneGame function in Twoweeks clas', HttpStatus.NOT_FOUND)
+      throw new HttpException(error.message + ' from searchInOneGame function in Twoweeks class', HttpStatus.NOT_FOUND)
     }
   }
 

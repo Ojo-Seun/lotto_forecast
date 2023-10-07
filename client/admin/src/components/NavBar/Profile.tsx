@@ -14,7 +14,6 @@ function Profile() {
       <div className={styles.profileDetails}>
         <img className={styles.avater} width={40} height={40} src={Avater} alt="Avater Image" />
         <span style={{ color: "white" }}>Super Admin</span>
-        <button style={{ color: "gray" }}>&#x2304;</button>
         <AnimatePresence key={"drop-down"}>
           <motion.div variants={DropDownVarian} initial="initial" animate="animate" exit={"exit"} className={styles.dropDown}>
             <div>

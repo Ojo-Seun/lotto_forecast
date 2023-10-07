@@ -1,7 +1,7 @@
 .drawer {
   position: absolute;
+  height: 80vh;
   width: 30em;
-  min-height: 100vh;
   border-right: 2px solid var(--bg_color);
   z-index: 90;
   background-color: var(--primary_color_light);

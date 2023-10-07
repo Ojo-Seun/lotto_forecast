@@ -1,6 +1,7 @@
 import { ArgumentMetadata, Injectable, PipeTransform, UnprocessableEntityException } from '@nestjs/common'
 import { InserOne } from '../interface/insert_one.interface'
 import { Validators } from '../../global-utils/validator.service'
+import { games } from 'src/games/utils/util'
 
 @Injectable()
 export class InserOnePipe implements PipeTransform<InserOne, InserOne> {
@@ -10,7 +11,7 @@ export class InserOnePipe implements PipeTransform<InserOne, InserOne> {
     if (!value || value.game !== value.payload.Name) {
       throw new UnprocessableEntityException(`${value?.game} is not a vaild game name or is empty`)
     }
-    const isValidName = this.validators.gameNameValidator(value.game)
+    const isValidName = this.validators.gameNameValidator(value.game, games as string[])
     const isValidPayload = this.validators.dataEventValidator(value.payload)
     const allIsValid = isValidName ?? isValidPayload
     if (allIsValid?.err) {

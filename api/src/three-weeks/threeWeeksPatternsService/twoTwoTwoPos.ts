@@ -14,9 +14,9 @@ export class TwoTwoTwoPos {
   threeWeeksmatchFns: ThreeWeeksMatchFns
   constructor(private readonly matchFn: MatchFnService, private readonly threeWeeksSearchService: ThreeWeeksSearchService) {
     this.threeWeeksmatchFns = {
-      isMatchLastEvent: this.matchFn.twoNumsAtPos,
-      isMatchSecondEvent: this.matchFn.twoNumsAtPos,
-      isMatchThirdEvent: this.matchFn.twoNumsAtPos,
+      isMatchLastEvent: this.matchFn.twoNumsCloseAtPos,
+      isMatchSecondEvent: this.matchFn.twoNumsCloseAtPos,
+      isMatchThirdEvent: this.matchFn.twoNumsCloseAtPos,
     }
   }
 

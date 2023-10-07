@@ -62,34 +62,25 @@ export class RepoService {
   ) {
     this.ghanaModels = [NATIONALModel, BONANZAModel, LUCKY_GModel, MID_WEEKModel, FORTUNEModel, MSPModel]
     this.premmierModels = [BINGOModel, CLUB_MASTERModel, DIAMONDModel, ENUGUModel, FAIR_CHANCEModel, GOLDModel, INTERNATIONALModel, JACKPOTModel, KINGModel, LUCKYModel, MARK_IIModel, METROModel, O6Model, PEOPLESModel, ROYALModel, SUPERModel, TOTAModel, VAGModel]
-    // Add validation middleware to each model
+    // Add validation middleware to  each game model
+    const validate = (event: number[]) => {
+      if (event.length !== 5) return false
+      for (let i = 0; i < event.length; i++) {
+        const element = event[i]
+        const isValid = element >= 0 && element <= 90
+        if (isValid) {
+          return true
+        }
+        return false
+      }
+    }
     const validateNextedDoc = () => {
       const allmodelsArr = [...this.ghanaModels, ...this.premmierModels]
       allmodelsArr.forEach((model) => {
         // Validate Winning field
-        model.schema.path('Winning').validate((values: number[]) => {
-          if (values.length !== 5) return false
-          for (let i = 0; i < values.length; i++) {
-            const element = values[i]
-            const isValid = element >= 0 && element <= 90
-            if (isValid) {
-              return true
-            }
-            return false
-          }
-        })
+        model.schema.path('Winning').validate(validate)
         // Validate Machine field
-        model.schema.path('Machine').validate((values: number[]) => {
-          if (values.length !== 5) return false
-          for (let i = 0; i < values.length; i++) {
-            const element = values[i]
-            const isValid = element >= 0 && element <= 90
-            if (isValid) {
-              return true
-            }
-            return false
-          }
-        })
+        model.schema.path('Machine').validate(validate)
       })
     }
     validateNextedDoc()
@@ -112,7 +103,7 @@ export class RepoService {
       ['MID WEEK', MID_WEEKModel],
       ['MSP', MSPModel],
       ['O6', O6Model],
-      ['Peoples', PEOPLESModel],
+      ['PEOPLES', PEOPLESModel],
       ['LUCKY', LUCKYModel],
       ['ROYAL', ROYALModel],
       ['SUPER', SUPERModel],

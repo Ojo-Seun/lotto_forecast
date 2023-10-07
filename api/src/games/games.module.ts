@@ -1,7 +1,7 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common'
+import { DynamicModule, Module, Provider, Scope } from '@nestjs/common'
 
 import { MatchFnService } from './matchFns.service'
-import { AutoSelectService } from './autoSelect.service'
+import { GroupSelectionService } from './group-selection.service'
 import { SearchFns } from './utils/types'
 import { RepoModule } from 'src/repository/repo.module'
 import { RepoService } from 'src/repository/repo.service'
@@ -13,19 +13,16 @@ import { SearchService } from './search.service'
 })
 export class GamesModule {
   static register(searchFns: SearchFns): DynamicModule {
-    const searchService: Provider = {
-      provide: SearchService,
-      useFactory: (repoService: RepoService, payloadService: PayloadService) => {
-        return new SearchService(repoService, payloadService, searchFns)
-      },
-      inject: [RepoService, PayloadService],
+    const SEARCHFns: Provider = {
+      provide: 'SEARCH-FUNCTIONS',
+      useValue: searchFns,
     }
 
     return {
       imports: [RepoModule],
       module: GamesModule,
-      providers: [searchService, MatchFnService, AutoSelectService],
-      exports: [searchService, MatchFnService, AutoSelectService, RepoModule],
+      providers: [SearchService, MatchFnService, GroupSelectionService, SEARCHFns],
+      exports: [SearchService, MatchFnService, GroupSelectionService, RepoModule],
     }
   }
 }

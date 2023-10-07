@@ -1,6 +1,6 @@
 import { IntersectionType } from '@nestjs/mapped-types'
 import { ApiProperty } from '@nestjs/swagger'
-import { Games, Group, WinningOrMachineEvent } from 'src/games/interface/types'
+import { Games, Group, WhereToSearch, WinningOrMachineEvent } from 'src/games/interface/types'
 import { ThreeWeeksPattern } from '../interface/types'
 import { threeWeeksPatterns } from '../utils/util'
 import { games, groups } from 'src/games/utils/util'
@@ -21,4 +21,6 @@ export class ThreeWeeksPaylaodDto {
   numOfWeeksToAdd: number
   @ApiProperty({ enum: threeWeeksPatterns, required: true })
   pattern: ThreeWeeksPattern
+  @ApiProperty({ enum: games, enumName: 'gameToForecast', required: true })
+  gameToForecast: Games
 }

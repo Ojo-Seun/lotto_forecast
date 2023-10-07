@@ -1,0 +1,9 @@
+#error {
+  overflow: hidden;
+  text-align: center;
+  color: orange;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 1em 0;
+  font-weight: bold;
+}

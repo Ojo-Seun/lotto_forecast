@@ -11,6 +11,9 @@ import { GameDetailsPipe } from './pipes/gameDetails.pipe'
 import { GameDetailsDto } from './dto/gameDetailsDto'
 import { ErrorObjectService } from '../global-utils/error-object.service'
 import { InsertMany } from './interface/insert_many.interfer'
+import { GetEventsDataPipe } from './pipes/get-events-data-pipe'
+import { GetEventsDTO } from './dto/getEventsDto'
+import { Auth } from 'src/auth/decorators/auth.decorator'
 
 @Controller('games/data')
 @ApiTags('Games Data')
@@ -18,6 +21,7 @@ export class DataController {
   constructor(private readonly dataService: DataService, private readonly errorObj: ErrorObjectService) {}
 
   @Post()
+  //@Auth('ADMINISTRATOR')
   @UsePipes(GameDetailsPipe)
   @ApiBody({ enum: games, required: true })
   async getGameDetails(@Body('payload') payload: GameDetailsDto) {
@@ -29,10 +33,24 @@ export class DataController {
     }
   }
 
+  @Post('game-events')
+  //@Auth('SUBSCRIBER')
+  @UsePipes(GetEventsDataPipe)
+  @ApiBody({ type: GetEventsDTO })
+  async getEvents(@Body('payload') payload: GetEventsDTO) {
+    try {
+      return this.dataService.getEvents(payload)
+    } catch (error) {
+      const { response, status, options } = this.errorObj.error('error occured', error.message, HttpStatus.EXPECTATION_FAILED)
+      throw new HttpException(response, status, options)
+    }
+  }
+
   @Post('insert_many')
+  @Auth('ADMINISTRATOR')
   @UsePipes(InsertManyPipe)
   @ApiBody({ type: DataInsertManyDto })
-  async insertMany(@Body('data') data: DataInsertManyDto) {
+  async insertMany(@Body('payload') data: DataInsertManyDto) {
     try {
       return this.dataService.insertMany(data as InsertMany)
     } catch (error) {
@@ -41,12 +59,13 @@ export class DataController {
     }
   }
 
-  @Patch('update')
+  @Patch('insert_one')
+  // @Auth('ADMINISTRATOR')
   @UsePipes(InserOnePipe)
   @ApiBody({ type: DataInsertOneDto })
-  async update(@Body('data') data: DataInsertOneDto) {
+  async insertOne(@Body('payload') data: DataInsertOneDto) {
     try {
-      return await this.dataService.update(data.game, data.payload)
+      return await this.dataService.insertOne(data.game, data.payload)
     } catch (error) {
       const { response, status, options } = this.errorObj.error('error from update method', error.message)
       throw new HttpException(response, status, options)

@@ -9,8 +9,8 @@ export class TwoPosTwoPos {
   twoWeeksMatchFns: TwoWeeksMatchFns
   constructor(private readonly matchFn: MatchFnService, private readonly twoWeeksSearchService: TwoWeeksSearchService) {
     this.twoWeeksMatchFns = {
-      isMatchLastEvent: matchFn.twoNumsAtPos,
-      isMatchSecondEvent: matchFn.twoNumsAtPos,
+      isMatchLastEvent: matchFn.twoAtPos,
+      isMatchSecondEvent: matchFn.twoAtPos,
     }
   }
 

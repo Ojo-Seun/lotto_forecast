@@ -1,13 +1,7 @@
 .App {
   width: 100vw;
-  min-height: 120vh;
-  background-color: var(--primary_color_light);
+  min-height: 100vh;
 }
 
 .App main {
-  position: relative;
-  background-color: black;
-  /* background-image: url("../public/dashboard.png");
-  background-repeat: no-repeat;
-  background-position: center; */
 }

@@ -51,11 +51,11 @@ async function searchUpward(game: GameTypes[], whereToSearch: WhereToSearch, que
         if (isMatchSecondEvent) {
           const isMatchThirdEvent = await matchFns.isMatchThirdEvent(game[thirdToLastIndex], thirdToLastEvent, whereToSearch)
           if (isMatchThirdEvent) {
-            game[lastIndex] = { ...extractPropertyFromObj(game[lastIndex]), level: 'lastEvent', searchedIn: whereToSearch, direction: 'up' }
-            game[secondToLastIndex] = { ...extractPropertyFromObj(game[secondToLastIndex]), level: 'secondToLastEvent', searchedIn: whereToSearch, direction: 'up' }
-            game[thirdToLastIndex] = { ...extractPropertyFromObj(game[thirdToLastIndex]), level: 'thirdToLastEvent', searchedIn: whereToSearch, direction: 'up' }
-            const start = i - numOfWeeksToAdd < 0 ? 0 : i - numOfWeeksToAdd
-            const end = numOfWeeksToAdd + i
+            game[lastIndex] = { ...extractPropertyFromObj(game[lastIndex]), weeksApart: 0, searchedIn: whereToSearch, direction: 'up' }
+            game[secondToLastIndex] = { ...extractPropertyFromObj(game[secondToLastIndex]), weeksApart: 1, searchedIn: whereToSearch, direction: 'up' }
+            game[thirdToLastIndex] = { ...extractPropertyFromObj(game[thirdToLastIndex]), weeksApart: 2, searchedIn: whereToSearch, direction: 'up' }
+            const start = thirdToLastIndex - numOfWeeksToAdd < 0 ? 0 : thirdToLastIndex - numOfWeeksToAdd
+            const end = i + numOfWeeksToAdd > game.length ? game.length : i + numOfWeeksToAdd
             const arr = game.slice(start, end)
 
             result = [...result, ...arr]
@@ -65,7 +65,7 @@ async function searchUpward(game: GameTypes[], whereToSearch: WhereToSearch, que
     }
     return result
   } catch (error) {
-    console.log({ error: error.message, from: 'occured in searchUp function in ThreeWeeksSearchService class' })
+    console.log({ error: error.message, from: 'occured in searchUp function of ThreeWeeksSearchService class' })
 
     throw new HttpException(error.massge, HttpStatus.INTERNAL_SERVER_ERROR)
   }
@@ -95,11 +95,11 @@ async function searchDownward(game: GameTypes[], whereToSearch: WhereToSearch, q
         if (isMatchSecondEvent) {
           const isMatchThirdEvent = await matchFns.isMatchThirdEvent(game[thirdToLastIndex], thirdToLastEvent, whereToSearch)
           if (isMatchThirdEvent) {
-            game[lastIndex] = { ...extractPropertyFromObj(game[lastIndex]), level: 'lastEvent', searchedIn: whereToSearch, direction: 'down' }
-            game[secondToLastIndex] = { ...extractPropertyFromObj(game[secondToLastIndex]), level: 'secondToLastEvent', searchedIn: whereToSearch, direction: 'down' }
-            game[thirdToLastIndex] = { ...extractPropertyFromObj(game[thirdToLastIndex]), level: 'thirdToLastEvent', searchedIn: whereToSearch, direction: 'down' }
-            const start = i - numOfWeeksToAdd
-            const end = numOfWeeksToAdd + i > game.length ? i : numOfWeeksToAdd + i
+            game[lastIndex] = { ...extractPropertyFromObj(game[lastIndex]), weeksApart: 0, searchedIn: whereToSearch, direction: 'down' }
+            game[secondToLastIndex] = { ...extractPropertyFromObj(game[secondToLastIndex]), weeksApart: 1, searchedIn: whereToSearch, direction: 'down' }
+            game[thirdToLastIndex] = { ...extractPropertyFromObj(game[thirdToLastIndex]), weeksApart: 2, searchedIn: whereToSearch, direction: 'down' }
+            const start = i - numOfWeeksToAdd < 0 ? 0 : i - numOfWeeksToAdd
+            const end = numOfWeeksToAdd + thirdToLastIndex > game.length ? game.length : numOfWeeksToAdd + thirdToLastIndex
             const arr = game.slice(start, end)
 
             result = [...result, ...arr]

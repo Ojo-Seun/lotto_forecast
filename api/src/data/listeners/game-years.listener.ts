@@ -8,7 +8,7 @@ export class GameYearsListener {
   constructor(private readonly repoService: RepoService) {}
   @OnEvent('game-created', { async: true })
   async handleGameCreatedEvent(event: GameCreatedEvent) {
-    // Years of the game
+    // Years of the game model
     const yearsModel = this.repoService.getGameYearsModel()
     // delete the numbers of years for this game
     await yearsModel.deleteOne({ Game: event.Game })

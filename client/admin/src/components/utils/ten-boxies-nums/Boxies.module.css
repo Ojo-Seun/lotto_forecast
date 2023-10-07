@@ -1,0 +1,80 @@
+.tenboxies {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  margin-bottom: 2em;
+}
+.eventsWrapper,
+.eventWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.fiveBoxies {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+
+.sideNames {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sideNames span {
+  display: block;
+  font-weight: bold;
+}
+
+.box,
+.dynamicBox {
+  display: block;
+  width: 4em;
+  height: 2.5em;
+  border-radius: 10px;
+  background-color: black;
+  color: var(--primary_color_light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dynamicBox {
+  width: 4.8em;
+  height: 3em;
+  text-align: center;
+}
+
+.form .btn {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  justify-content: center;
+}
+
+.form #submit {
+  display: flex;
+  outline: none;
+  background-color: #282c34;
+  color: aqua;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2px;
+  font-weight: bold;
+}
+
+.dynamicBox::-webkit-outer-spin-button,
+.dynamicBox::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dynamicBox {
+  -moz-appearance: textfield;
+}

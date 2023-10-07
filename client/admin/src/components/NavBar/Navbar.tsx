@@ -1,23 +1,41 @@
 import DrawerBtn from "./DrawerBtn";
 import styles from "./NavBar.module.css";
 import Profile from "./Profile";
+import { NavLink, useLocation } from "react-router-dom";
 import DashboardIcon from "../../assets/dashboardIcon.png";
+import SettingsIcon from "../../assets/settingsIcon.png";
 
-interface Props {
-  handleLefDrawer: () => void;
-  handleRightDrawer: () => void;
-}
+// interface Props {
+//   handleLefDrawer: () => void;
+//   handleRightDrawer: () => void;
+// }
 
-function Navbar({ handleLefDrawer, handleRightDrawer }: Props) {
+const isActivePath = (path: string, pathname: string) => {
+  return pathname === path ? styles.selected : "";
+};
+
+function Navbar() {
+  const { pathname } = useLocation();
   return (
     <div className={styles.navWrapper}>
-      <DrawerBtn handleDrawer={handleLefDrawer} />
+      <DrawerBtn />
       <div className={styles.dashboardNav}>
-        <img src={DashboardIcon} alt="Dashboard Icon" width={32} height={32} />
-        <span style={{ color: "aqua", fontSize: "1em" }}>Dashboard</span>
+        <nav className={styles.nav}>
+          <div className={`${styles.link} ${isActivePath("/", pathname)}`}>
+            <img src={DashboardIcon} className={styles.icon} alt="Dashboard Icon" width={16} height={16} />
+            <NavLink to="/">Dashboard</NavLink>
+          </div>
+
+          <div className={`${styles.link} ${isActivePath("/operations", pathname)}`}>
+            <img src={SettingsIcon} className={styles.icon} alt="Dashboard Icon" width={16} height={16} />
+
+            <NavLink to={"/operations"}>Operations</NavLink>
+          </div>
+          <span className={styles.indicator}></span>
+        </nav>
       </div>
       <Profile />
-      <DrawerBtn handleDrawer={handleRightDrawer} />
+      <DrawerBtn />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { PatternFns, QueryTypes } from 'src/games/utils/types'
  */
 
 @Injectable()
-export class AutoSelectService {
+export class GroupSelectionService {
   async search(queries: QueryTypes, patternFns: PatternFns) {
     const { game, group } = queries
     const isAll = (game as string) === 'ALL' && group === 'ALL' ? 'ALL' : null

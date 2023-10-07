@@ -43,15 +43,16 @@ async function searchUpward(game: GameTypes[], whereToSearch: WhereToSearch, que
     for (let i = length; i >= weeksApart; i--) {
       const lastIndex = i
       const secondToLastIndex = i - weeksApart
-      const start = secondToLastIndex - numOfWeeksToAdd < 0 ? 0 : secondToLastIndex - numOfWeeksToAdd
-      const end = numOfWeeksToAdd + i > length ? game.length : numOfWeeksToAdd + i
 
       const isMatchLastEvent = await matchFns.isMatchLastEvent(game[lastIndex], lastEvent, whereToSearch)
       if (isMatchLastEvent) {
         const isMatchSecondEvent = await matchFns.isMatchSecondEvent(game[secondToLastIndex], secondToLastEvent, whereToSearch)
         if (isMatchSecondEvent) {
-          game[lastIndex] = { ...extractPropertyFromObj(game[lastIndex]), level: 'lastEvent', weeksApart, searchedIn: whereToSearch, direction: 'up' }
-          game[secondToLastIndex] = { ...extractPropertyFromObj(game[secondToLastIndex]), level: 'secondToLastEvent', searchedIn: whereToSearch, direction: 'up' }
+          game[lastIndex] = { ...extractPropertyFromObj(game[lastIndex]), weeksApart: 0, searchedIn: whereToSearch, direction: 'up' }
+          game[secondToLastIndex] = { ...extractPropertyFromObj(game[secondToLastIndex]), weeksApart, searchedIn: whereToSearch, direction: 'up' }
+          const start = secondToLastIndex - numOfWeeksToAdd < 0 ? 0 : secondToLastIndex - numOfWeeksToAdd
+          const end = numOfWeeksToAdd + i > length ? game.length : numOfWeeksToAdd + i
+          console.log({ i })
 
           const arr = game.slice(start, end)
 
@@ -83,16 +84,16 @@ async function searchDownward(game: GameTypes[], whereToSearch: WhereToSearch, q
     for (let i = 0; i < len; i++) {
       const lastIndex = i
       const secondToLastIndex = i + weeksApart
-      const start = i - numOfWeeksToAdd < 0 ? 0 : i - numOfWeeksToAdd
-      const end = numOfWeeksToAdd + secondToLastIndex > game.length ? game.length : secondToLastIndex + i
 
       const isMatchLastEvent = await matchFns.isMatchLastEvent(game[lastIndex], lastEvent, whereToSearch)
       if (isMatchLastEvent) {
         const isMatchSecondEvent = await matchFns.isMatchSecondEvent(game[secondToLastIndex], secondToLastEvent, whereToSearch)
         if (isMatchSecondEvent) {
-          game[lastIndex] = { ...extractPropertyFromObj(game[lastIndex]), level: 'lastEvent', weeksApart, searchedIn: whereToSearch, direction: 'down' }
-          game[secondToLastIndex] = { ...extractPropertyFromObj(game[secondToLastIndex]), level: 'secondToLastEvent', searchedIn: whereToSearch, direction: 'down' }
-
+          game[lastIndex] = { ...extractPropertyFromObj(game[lastIndex]), weeksApart: 0, searchedIn: whereToSearch, direction: 'down' }
+          game[secondToLastIndex] = { ...extractPropertyFromObj(game[secondToLastIndex]), weeksApart, searchedIn: whereToSearch, direction: 'down' }
+          const start = i - numOfWeeksToAdd < 0 ? 0 : i - numOfWeeksToAdd
+          const end = numOfWeeksToAdd + secondToLastIndex > game.length ? game.length : secondToLastIndex + numOfWeeksToAdd
+          console.log({ start, end })
           const arr = game.slice(start, end)
 
           result = [...result, ...arr]

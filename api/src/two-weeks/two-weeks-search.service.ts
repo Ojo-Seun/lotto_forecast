@@ -9,7 +9,11 @@ export class TwoWeeksSearchService {
   constructor(private readonly searchService: SearchService) {}
 
   async searchInOneGame(matchFns: TwoWeeksMatchFns, queries: TwoWeeksPayload): Promise<ResultType[]> {
-    return await this.searchService.searchInOneGame(queries.game, queries, matchFns)
+    try {
+      return await this.searchService.searchInOneGame(queries.game, queries, matchFns)
+    } catch (error) {
+      throw new HttpException(error.message + ' from searchInOneGame of TwoWeeksSearchService function', HttpStatus.EXPECTATION_FAILED)
+    }
   }
 
   async searchInGhanaGames(matchFns: TwoWeeksMatchFns, queries: TwoWeeksPayload): Promise<ResultType[]> {

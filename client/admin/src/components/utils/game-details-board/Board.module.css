@@ -1,0 +1,105 @@
+.afterUpdateBoard {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  border: 0.8em solid var(--active_color);
+  background-color: var(--secondary_color);
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  justify-items: center;
+}
+
+.boardDisplay::after {
+  position: absolute;
+  content: url("/Dot.png");
+  top: 5px;
+  right: 5px;
+}
+.afterUpdateBoard::after {
+  position: absolute;
+  content: url("/Dot.png");
+  bottom: 3px;
+  right: 3px;
+}
+
+.afterUpdateBoard::before {
+  position: absolute;
+  content: url("/Dot.png");
+  bottom: 3px;
+  left: 3px;
+}
+
+.boardDisplay::before {
+  position: absolute;
+  content: url("/Dot.png");
+  top: 5px;
+  left: 5px;
+}
+.boardDisplay,
+.beforeUpdateBoard {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  background-color: var(--primary_color_dark);
+}
+
+.beforeUpdateBoard {
+  position: relative;
+  border: 10px solid var(--active_color);
+  text-align: center;
+  padding: 1em;
+}
+.beforeUpdateBoard span {
+  display: block;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+#name {
+  color: aqua;
+}
+
+#value {
+  color: white;
+}
+
+#name::after {
+  position: absolute;
+  content: url(/Dot.png);
+  left: 5px;
+  top: 5px;
+}
+
+#name::before {
+  position: absolute;
+  content: url(/Dot.png);
+  right: 5px;
+  top: 5px;
+}
+
+#value::after {
+  position: absolute;
+  content: url(/Dot.png);
+  left: 5px;
+  bottom: 5px;
+}
+
+#value::before {
+  position: absolute;
+  content: url(/Dot.png);
+  right: 5px;
+  bottom: 5px;
+}
+.boardDisplay > div {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50%;
+}
+
+.boardDisplay div span {
+  font-weight: bold;
+}

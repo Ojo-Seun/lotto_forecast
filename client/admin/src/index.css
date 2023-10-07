@@ -4,12 +4,14 @@
   box-sizing: border-box;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  user-select: none;
 }
 *::-webkit-scrollbar {
   display: none;
 }
 :root {
   font-family: "Roboto", sans-serif;
+  font-family: "Roboto Serif", serif;
   line-height: 1.5;
 
   font-synthesis: none;
@@ -20,14 +22,15 @@
   --primary_color_light: white;
   --primary_color_dark: #282c34;
   --secondary_color: black;
-  --active_color: #2d9797;
+  --active_color: aqua;
   --inactive_color: gray;
   --bg_color: #f5f5f5;
 }
 
 html,
 body {
+  padding: 0px;
+  margin: 0px;
   font-size: 16px;
   overflow-x: hidden;
-  background-color: var(--bg_color);
 }

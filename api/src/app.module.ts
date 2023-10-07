@@ -9,9 +9,13 @@ import { TwoWeeksModule } from './two-weeks/two-weeks.module'
 import { DataModule } from './data/data.module'
 import { UtilsModule } from './global-utils/utils.module'
 import { EventEmitterModule } from '@nestjs/event-emitter'
+import { GamesModule } from './games/games.module'
+import { AuthModule } from './auth/auth.module'
+import { UsersModule } from './users/users.module'
+import { MailModule } from './mail/mail.module'
 
 @Module({
-  imports: [ThrottlerModule.forRoot([ThrottlerOptions]), ConfigModule.forRoot(ConfigOptions), ThreeWeeksModule, TwoWeeksModule, MongooseModule.forRootAsync(MongooseModuleAsyncOptions), DataModule, UtilsModule, EventEmitterModule.forRoot()],
+  imports: [ThrottlerModule.forRoot([ThrottlerOptions]), MailModule, ConfigModule.forRoot(ConfigOptions), ThreeWeeksModule, TwoWeeksModule, MongooseModule.forRootAsync(MongooseModuleAsyncOptions), GamesModule, DataModule, UtilsModule, EventEmitterModule.forRoot(), AuthModule, UsersModule],
   controllers: [],
   providers: [
     {

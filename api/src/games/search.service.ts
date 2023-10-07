@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common'
 import { RepoService } from '.././repository/repo.service'
 import { GameTypes, Games, WhereToSearch } from '../games/interface/types'
 import { PayloadService } from '../global-utils/payload.service'
@@ -11,24 +11,30 @@ interface ResultType {
 
 @Injectable()
 export class SearchService {
-  // private searchDownward: SearchUpOrDown
-  // private searchUpward: SearchUpOrDown
   private game: GameTypes[]
   queries: QueryTypes
   matchFns: MatchFns
-  constructor(private readonly repoService: RepoService, private readonly payloadService: PayloadService, private readonly searchFns: SearchFns) {}
+  constructor(private readonly repoService: RepoService, private readonly payloadService: PayloadService, @Inject('SEARCH-FUNCTIONS') private readonly searchFns: SearchFns) {}
 
   private async searchInWin() {
-    const upResult = await this.searchFns.searchUpward(this.game, 'Winning', this.queries, this.matchFns)
-    const downResult = await this.searchFns.searchDownward(this.game, 'Winning', this.queries, this.matchFns)
-    return [...upResult, ...downResult]
+    try {
+      const upResult = await this.searchFns.searchUpward(this.game, 'Winning', this.queries, this.matchFns)
+      const downResult = await this.searchFns.searchDownward(this.game, 'Winning', this.queries, this.matchFns)
+      return [...upResult, ...downResult]
+    } catch (error) {
+      throw new HttpException(error.message + ' from searchInWin function of SearchService class', HttpStatus.EXPECTATION_FAILED)
+    }
   }
 
   private async searchInMachine() {
-    const upResult = await this.searchFns.searchUpward(this.game, 'Machine', this.queries, this.matchFns)
-    const downResult = await this.searchFns.searchDownward(this.game, 'Machine', this.queries, this.matchFns)
+    try {
+      const upResult = await this.searchFns.searchUpward(this.game, 'Machine', this.queries, this.matchFns)
+      const downResult = await this.searchFns.searchDownward(this.game, 'Machine', this.queries, this.matchFns)
 
-    return [...upResult, ...downResult]
+      return [...upResult, ...downResult]
+    } catch (error) {
+      throw new HttpException(error.message + ' from searchInOneMachine function of SearchService class', HttpStatus.EXPECTATION_FAILED)
+    }
   }
 
   /**
@@ -38,12 +44,17 @@ export class SearchService {
    * @returns Promise<ResultType[]>
    */
   async searchInOneGame(gameName: Games, queries: QueryTypes, matchFns: MatchFns): Promise<ResultType[]> {
-    // this.searchUpward = searcUp
-    // this.searchDownward = searchDown
+    const isGameToForecast = queries.gameToForecast === gameName
     this.queries = queries
     this.matchFns = matchFns
     const model = this.repoService.getModel(gameName)
-    this.game = await model.find({})
+    let game = await model.find({})
+
+    if (isGameToForecast) {
+      // Remove last event
+      game.splice(-1)
+    }
+    this.game = game
     let result: ResultType[] = []
     const winResult = await this.searchInWin()
     const machineResult = await this.searchInMachine()

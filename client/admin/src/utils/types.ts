@@ -17,7 +17,7 @@ type Games =
   | "MID WEEK"
   | "MSP"
   | "O6"
-  | "Peoples"
+  | "PEOPLES"
   | "LUCKY"
   | "ROYAL"
   | "SUPER"
@@ -25,7 +25,6 @@ type Games =
   | "VAG";
 
 type WinningOrMachineEvent = [number, number, number, number, number];
-type Group = "GHANA" | "PREMMIER" | "ALL";
 interface Payload {
   secondToLastEvent: WinningOrMachineEvent;
   lastEvent: WinningOrMachineEvent;
@@ -36,7 +35,6 @@ interface Payload {
 
 type EventLevel = "lastEvent" | "secondToLastEvent" | "thirdToLastEvent";
 type WhereToSearch = "Machine" | "Winning";
-type Direction = "up" | "down";
 type Category = "PREMMIER" | "GHANA";
 export interface GameTypes {
   Name: Games;
@@ -48,11 +46,24 @@ export interface GameTypes {
   Machine: WinningOrMachineEvent;
   Category: Category;
   Year: number;
-  _id?: string;
-  target?: boolean;
-  level?: EventLevel;
-  searchedIn?: WhereToSearch;
-  direction?: Direction;
   Ev: number;
 }
-export type { Payload, Games, Group, WinningOrMachineEvent, Category, WhereToSearch, EventLevel };
+type Group = "PREMMIER" | "GHANA";
+interface GameDetails {
+  nextIndex: number;
+  lastIndex: number;
+  last2Events: Pick<GameTypes, "Winning" | "Machine">[];
+}
+interface InsertMany {
+  game: Games;
+  payload: GameTypes[];
+  years: number[];
+}
+
+interface InsertOne {
+  game: Games;
+  payload: GameTypes;
+}
+
+type Operation = "Insert Many" | "Insert One";
+export type { Payload, Group, InsertOne, GameDetails, Operation, InsertMany, Games, WinningOrMachineEvent, Category, WhereToSearch, EventLevel };

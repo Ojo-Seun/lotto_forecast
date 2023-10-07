@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { AutoSelectService } from 'src/games/autoSelect.service'
+import { GroupSelectionService } from 'src/games/group-selection.service'
 import { TwoCloseOneTwoCloseAny } from './threeWeeksPatternsService/twoCloseOneTwoCloseAny'
 import { ThreeWeeksPayload } from './interface/types'
 import { PayloadService } from 'src/global-utils/payload.service'
@@ -17,7 +17,7 @@ import { TwoTwoTwoPos } from './threeWeeksPatternsService/twoTwoTwoPos'
 @Injectable()
 export class ThreeWeeksService {
   constructor(
-    private readonly autoSelectService: AutoSelectService,
+    private readonly groupSelectionService: GroupSelectionService,
     private readonly payloadService: PayloadService,
     private readonly twoCloseTwoCloseOneAny: TwoCloseTwoCloseOneAny,
     private readonly twoOneTwoAny: TwoOneTwoAny,
@@ -86,7 +86,7 @@ export class ThreeWeeksService {
         throw new HttpException('Invalid three-weeks-search pattern', HttpStatus.BAD_REQUEST)
     }
 
-    const result = this.autoSelectService.search(queries, patternFns)
+    const result = this.groupSelectionService.search(queries, patternFns)
     return result
   }
 }

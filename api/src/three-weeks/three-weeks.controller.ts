@@ -26,7 +26,7 @@ const schema = {
   },
 }
 
-@Controller('games/three_weeks_data')
+@Controller('games/three_weeks')
 @ApiTags('Game Forecast With Last 3 Weeks Result')
 export class ThreeWeeksController {
   constructor(private readonly threeWeeksService: ThreeWeeksService, private readonly errorService: ErrorObjectService) {}
@@ -46,12 +46,9 @@ export class ThreeWeeksController {
   @ApiOperation({ summary: 'Search for patterns using last 3 weeks result' })
   @ApiBody({ type: ThreeWeeksPaylaodDto })
   async search(@Body('payload') payload: ThreeWeeksPaylaodDto) {
-    const queries = { ...payload } as unknown as ThreeWeeksPayload
     try {
-      const result = await this.threeWeeksService.search(queries)
-      return {
-        result,
-      }
+      const result = await this.threeWeeksService.search(payload)
+      return result
     } catch (error: any) {
       const { response, status, options } = this.errorService.error('error occured', error.message, HttpStatus.EXPECTATION_FAILED)
       throw new HttpException(response, status, options)

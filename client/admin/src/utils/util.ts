@@ -1,3 +1,5 @@
+import { WinningOrMachineEvent } from "./types";
+
 const games: Readonly<string[]> = [
   "NATIONAL",
   "BINGO",
@@ -24,7 +26,7 @@ const games: Readonly<string[]> = [
   "TOTA",
   "VAG",
 ];
-const groups: Readonly<string[]> = ["GHANA", "PREMMIER", "ALL"];
+const groups: Readonly<string[]> = ["GHANA", "PREMMIER"];
 
 const premmiers: Readonly<string[]> = [
   "BINGO",
@@ -47,18 +49,12 @@ const premmiers: Readonly<string[]> = [
   "VAG",
 ];
 const ghanas: Readonly<string[]> = ["NATIONAL", "BONANZA", "LUCKY G", "FORTUNE", "MID WEEK", "MSP"];
-const threeWeeksPatterns: Readonly<string[]> = [
-  "TwoOneTwoAny",
-  "TwoPosOneAnyTwoAny",
-  "TwoPosTwoAnyOneAny",
-  "TwoTwoOneAny",
-  "TwoTwoTwoAny",
-  "TwoTwoTwoPos",
-  "TwoPosOneAnyTwoCloseAny",
-  "TwoCloseOneTwoCloseAny",
-  "TwoCloseTwoCloseOneAny",
-  "TwoPosTwoCloseOneAny",
-];
-const twoWeeksPatterns: Readonly<string[]> = ["TwoCloseTwoClose", "TwoPosOnePos", "TwoPosTwoPos", "TwoCloseTwoAny"];
 
-export { games, groups, threeWeeksPatterns, twoWeeksPatterns, ghanas, premmiers };
+const dafauttEvents = [
+  { Winning: [0, 0, 0, 0, 0] as WinningOrMachineEvent, Machine: [0, 0, 0, 0, 0] as WinningOrMachineEvent },
+  { Winning: [0, 0, 0, 0, 0] as WinningOrMachineEvent, Machine: [0, 0, 0, 0, 0] as WinningOrMachineEvent },
+];
+const gameDetailsInitialData = { lastIndex: 0, nextIndex: 0, last2Events: dafauttEvents };
+const operations = ["Insert Many", "Insert One"];
+
+export { games, groups, ghanas, premmiers, gameDetailsInitialData, operations };

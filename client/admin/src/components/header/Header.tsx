@@ -1,9 +1,8 @@
-import React from "react";
-import styles from "./Hearder.module.css";
+import styles from "./Header.module.css";
 import Logo from "../../assets/logo.png";
 import NightModeIcon from "../../assets/nightMode.svg";
 
-function Hearder() {
+function Header() {
   return (
     <div className={styles.header}>
       <div className={styles.logo}>
@@ -16,4 +15,4 @@ function Hearder() {
   );
 }
 
-export default Hearder;
+export default Header;

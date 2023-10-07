@@ -23,7 +23,7 @@ export class MatchFnService {
   }
 
   /**
-   * search for two one number at any close position
+   * search for two numbers at any close position
    * @param targetEventObj
    * @param events
    * @param eventLevel
@@ -72,8 +72,6 @@ export class MatchFnService {
     const targetEvent = targetEventObj[whereToSearch] // Has five elements in the array
     // target may contains 0 which means absent of data.
     if (targetEvent[0] === 0) return false
-    // Data may contains 0 as element
-    if (targetEvent[0] === 0) return false
     // Set will not store duplicate values
     const set = new Set([...event, ...targetEvent])
     // if set size is less than 10 then atleast one element is the same in the two array
@@ -90,18 +88,49 @@ export class MatchFnService {
    * @returns Promise<boolean>
    */
 
-  async twoNumsAtPos(targetEventObj: GameTypes, event: number[], whereToSearch: WhereToSearch): Promise<boolean> {
+  async twoNumsCloseAtPos(targetEventObj: GameTypes, event: number[], whereToSearch: WhereToSearch): Promise<boolean> {
+    const targetEvent = targetEventObj[whereToSearch]
+    // target may contains 0 which means absent of data.
+    if (targetEvent[0] === 0) return false
+    const length = targetEvent.length - 1
+    for (let i = 0; i < length; i++) {
+      const next = i + 1
+      const isMatch = event[i] === targetEvent[i] && event[next] === targetEvent[next]
+      if (isMatch) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  async oneNumsAtPos(targetEventObj: GameTypes, event: number[], whereToSearch: WhereToSearch): Promise<boolean> {
     const targetEvent = targetEventObj[whereToSearch]
     // target may contains 0 which means absent of data.
     if (targetEvent[0] === 0) return false
 
-    const match0 = event[0] === targetEvent[0] && event[1] === targetEvent[1]
-    const match1 = event[1] === targetEvent[1] && event[2] === targetEvent[2]
-    const match2 = event[2] === targetEvent[2] && event[3] === targetEvent[3]
-    const match3 = event[3] === targetEvent[3] && event[4] === targetEvent[4]
+    for (let i = 0; i < targetEvent.length; i++) {
+      if (targetEvent[i] === event[i]) {
+        return true
+      }
+    }
 
-    const oneIsMatched = match0 || match1 || match2 || match3
+    return false
+  }
 
-    return oneIsMatched
+  async twoAtPos(targetEventObj: GameTypes, event: number[], whereToSearch: WhereToSearch): Promise<boolean> {
+    const targetEvent = targetEventObj[whereToSearch]
+    // target may contains 0 which means absent of data.
+    if (targetEvent[0] === 0) return false
+
+    let matchCount = 0
+    for (let i = 0; i < targetEvent.length; i++) {
+      const isMatch = targetEvent[i] === event[i]
+      if (isMatch) {
+        matchCount++
+      }
+    }
+
+    return matchCount >= 2
   }
 }

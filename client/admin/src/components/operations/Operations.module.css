@@ -1,0 +1,61 @@
+.container {
+  padding-top: 1em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15vh;
+}
+
+.title {
+  text-align: center;
+  font-size: 3em;
+  font-weight: bold;
+}
+.select {
+  display: flex;
+  gap: 3em;
+}
+.operations {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80%;
+  align-items: center;
+}
+
+.insertMany {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2em;
+}
+
+.fileUpload {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#file {
+  background-color: var(--secondary_color);
+  height: 3em;
+  border-radius: 10px;
+  color: aqua;
+}
+
+::-webkit-file-upload-button {
+  background-color: var(--primary_color_dark);
+  padding: 10px 16px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 1000px) {
+  .insertMany {
+    width: 60%;
+  }
+}

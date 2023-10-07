@@ -8,7 +8,7 @@ export class TwoWeeksDataPayloadPipe implements PipeTransform<TwoWeeksPayload, T
 
   transform(value: TwoWeeksPayload, metadata: ArgumentMetadata): TwoWeeksPayload {
     // Check if request body has values
-    if (!value) {
+    if (!value?.game) {
       throw new UnprocessableEntityException({ message: 'No payload' })
     }
 

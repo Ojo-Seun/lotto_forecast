@@ -1,4 +1,4 @@
-type Games = 'NATIONAL' | 'BINGO' | 'BONANZA' | 'CLUB MASTER' | 'DIAMOND' | 'ENUGU' | 'FAIR CHANCE' | 'FORTUNE' | 'GOLD' | 'INTERNATIONAL' | 'JACKPOT' | 'KING' | 'LUCKY G' | 'MARK-II' | 'METRO' | 'MID WEEK' | 'MSP' | 'O6' | 'Peoples' | 'LUCKY' | 'ROYAL' | 'SUPER' | 'TOTA' | 'VAG'
+type Games = 'NATIONAL' | 'BINGO' | 'BONANZA' | 'CLUB MASTER' | 'DIAMOND' | 'ENUGU' | 'FAIR CHANCE' | 'FORTUNE' | 'GOLD' | 'INTERNATIONAL' | 'JACKPOT' | 'KING' | 'LUCKY G' | 'MARK-II' | 'METRO' | 'MID WEEK' | 'MSP' | 'O6' | 'PEOPLES' | 'LUCKY' | 'ROYAL' | 'SUPER' | 'TOTA' | 'VAG'
 
 type WinningOrMachineEvent = [number, number, number, number, number]
 type Group = 'GHANA' | 'PREMMIER' | 'ALL'

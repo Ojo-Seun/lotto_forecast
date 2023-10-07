@@ -1,37 +1,41 @@
-import { useCallback, useState } from "react";
+import { Suspense, lazy } from "react";
 import "./App.css";
 import Navbar from "./components/NavBar/Navbar";
-import Drawer from "./components/drawer/Drawer";
 import Footer from "./components/footer/Footer";
-import Hearder from "./components/hearder/Hearder";
-import FileUpload from "./components/uploadEvents/FileUpload";
+import Header from "./components/header/Header";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import LoadingIndicator from "./components/utils/LodingIndicator";
+
+const LazyDashboard = lazy(() => import("./pages/Dashboard"));
+const LazyOperations = lazy(() => import("./pages/Operations"));
 
 function App() {
-  const [leftDrawer, setLeftDrawer] = useState(false);
-  const [righttDrawer, setRightDrawer] = useState(false);
+  const location = useLocation();
 
-  const handledleLeftDrawer = useCallback(() => {
-    setLeftDrawer((prev) => !prev);
-  }, []);
+  // const handledleLeftDrawer = useCallback(() => {
+  //   setLeftDrawer((prev) => !prev);
+  // }, []);
 
-  const handledleRighttDrawer = () => {
-    setRightDrawer((prev) => !prev);
-  };
+  // const handledleRighttDrawer = () => {
+  //   setRightDrawer((prev) => !prev);
+  // };
 
   return (
     <div className="App">
       <div>
-        <Hearder />
-        <Navbar handleLefDrawer={handledleLeftDrawer} handleRightDrawer={handledleRighttDrawer} />
+        <Header />
+        <Navbar />
       </div>
       <main>
-        <Drawer openDrawer={leftDrawer} side="left">
-          <FileUpload />
-        </Drawer>
-        <Drawer openDrawer={righttDrawer} side="right">
-          <div>Update Drawer</div>
-        </Drawer>
-        <div className="luck"></div>
+        <Suspense fallback={<LoadingIndicator />}>
+          <AnimatePresence>
+            <Routes location={location} key={location.key}>
+              <Route path="/" element={<LazyDashboard />} />
+              <Route path="operations" element={<LazyOperations />} />
+            </Routes>
+          </AnimatePresence>
+        </Suspense>
       </main>
       <div>
         <Footer />
