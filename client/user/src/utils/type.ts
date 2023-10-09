@@ -72,7 +72,7 @@ type ThreeWeeksPatterns =
   | "TwoCloseOneTwoCloseAny"
   | "TwoCloseTwoCloseOneAny"
   | "TwoPosTwoCloseOneAny"
-type TwoWeeksPatterns = "TwoCloseTwoClose" | "TwoPosOnePos" | "TwoPosTwoPos" | "TwoCloseTwoAny" | "TwoCloseTwoClosePos" | "TwoCloseTwoPos"
+type TwoWeeksPatterns = "TwoCloseTwoClose" | "TwoPosOnePos" | "TwoPosTwoPos" | "TwoCloseTwoAny" | "TwoCloseTwoClosePos" | "TwoCloseTwoPos" | "TwoPosTwoClose"
 
 interface ThreeWeeksPayload {
   thirdToLastEvent: WinningOrMachineEvent

@@ -14,6 +14,9 @@ import { InsertMany } from './interface/insert_many.interfer'
 import { GetEventsDataPipe } from './pipes/get-events-data-pipe'
 import { GetEventsDTO } from './dto/getEventsDto'
 import { Auth } from 'src/auth/decorators/auth.decorator'
+import { GetChart } from './decorators/get-chart.decorator'
+import { GetChartDTO } from './dto/get-chartDto'
+import { GetYears } from './decorators/get-years.decorator'
 
 @Controller('games/data')
 @ApiTags('Games Data')
@@ -60,7 +63,7 @@ export class DataController {
   }
 
   @Patch('insert_one')
-  // @Auth('ADMINISTRATOR')
+  @Auth('ADMINISTRATOR')
   @UsePipes(InserOnePipe)
   @ApiBody({ type: DataInsertOneDto })
   async insertOne(@Body('payload') data: DataInsertOneDto) {
@@ -68,6 +71,28 @@ export class DataController {
       return await this.dataService.insertOne(data.game, data.payload)
     } catch (error) {
       const { response, status, options } = this.errorObj.error('error from update method', error.message)
+      throw new HttpException(response, status, options)
+    }
+  }
+
+  @Post('chart')
+  @GetChart()
+  async getChart(@Body('payload') payload: GetChartDTO) {
+    try {
+      return await this.dataService.getChart(payload)
+    } catch (error) {
+      const { response, status, options } = this.errorObj.error(error.message, error.message)
+      throw new HttpException(response, status, options)
+    }
+  }
+
+  @Post('years')
+  @GetYears()
+  async getYears(@Body('payload') payload: GetChartDTO) {
+    try {
+      return await this.dataService.getYears(payload)
+    } catch (error) {
+      const { response, status, options } = this.errorObj.error(error.message, error.message)
       throw new HttpException(response, status, options)
     }
   }

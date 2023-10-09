@@ -23,14 +23,11 @@ function ForecastWith3WeeksResults() {
   const [data, setData] = useState(dataInitialState)
   useHead(head)
   return (
-    <div className={styles.container}>
-      <motion.div variants={RoutesVariants} initial={"initial"} animate={"animate"} exit={"exit"}>
-        <p className={styles.title}>Forecast With Last 3 Weeks Results</p>
-        <ThreeWeeksFilter data={data} setData={setData} />
-      </motion.div>
+    <motion.div className={styles.container} variants={RoutesVariants} initial={"initial"} animate={"animate"} exit={"exit"}>
+      <p className={styles.title}>Forecast With Last 3 Weeks Results</p>
+      <ThreeWeeksFilter data={data} setData={setData} />
       <>{data?.data.length > 0 && <Table result={data.data} />}</>
-      <Luck />
-    </div>
+    </motion.div>
   )
 }
 

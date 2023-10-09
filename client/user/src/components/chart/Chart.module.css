@@ -1,0 +1,77 @@
+#container {
+  width: 50vw;
+  height: 90vh;
+  position: fixed;
+  top: 2em;
+  right: 25%;
+  background-color: white;
+  padding: 2em;
+  border-left: 2px solid whitesmoke;
+  overflow: hidden;
+  border-radius: 1em;
+
+  border: 10px solid aqua;
+  z-index: 100;
+}
+
+#filter {
+  display: flex;
+  justify-content: space-between;
+}
+#title {
+  font-size: 2em;
+  text-align: center;
+  font-weight: bold;
+}
+
+#chart {
+  border-left: 2px solid var(--secondary_color);
+  border-right: 2px solid var(--secondary_color);
+  margin: 4em 0;
+}
+
+#gameInfo {
+  text-align: center;
+}
+
+#gameInfo span {
+  font-weight: bold;
+  margin-left: 1em;
+}
+
+#table {
+  width: 100%;
+}
+.tableRows {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+#table tbody {
+  display: block;
+  height: 50vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+#table thead tr th:not(.event) {
+  text-align: left;
+  width: 7%;
+}
+.event {
+  width: 10em;
+}
+.boundary {
+  border-right: 2px solid black;
+}
+.bold {
+  font-weight: bold;
+}
+#table tbody tr td:not(.boundary, .box) {
+  width: 7%;
+}
+
+.box {
+  width: 0.5em;
+  font-weight: bold;
+}

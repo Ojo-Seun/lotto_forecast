@@ -25,14 +25,11 @@ function ForecastWith2WeeksResults() {
 
   useHead(head)
   return (
-    <div className={styles.container}>
-      <motion.div variants={RoutesVariants} initial={"initial"} animate={"animate"} exit={"exit"}>
-        <p className={styles.title}>Forecast With Last 2 Weeks Results</p>
-        <TwoWeeksFilter data={data} setData={setData} />
-      </motion.div>
+    <motion.div className={styles.container} variants={RoutesVariants} initial={"initial"} animate={"animate"} exit={"exit"}>
+      <p className={styles.title}>Forecast With Last 2 Weeks Results</p>
+      <TwoWeeksFilter data={data} setData={setData} />
       <>{tableData?.length > 0 && <Table result={tableData} />}</>
-      <Luck />
-    </div>
+    </motion.div>
   )
 }
 

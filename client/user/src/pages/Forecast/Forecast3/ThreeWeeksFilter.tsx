@@ -20,7 +20,7 @@ function ThreeWeeksFilter({ data, setData }: Props) {
   const [gameToForecast, setgameToForecast] = useState("Select")
   const [groupToSearch, setGroupToSearch] = useState<ThreeWeeksPayload["group"]>("ALL")
   const [gameToSearch, setGameToSearch] = useState<ThreeWeeksPayload["game"]>("ALL")
-  const [pattern, setPattern] = useState<ThreeWeeksPatterns>("TwoCloseOneTwoCloseAny")
+  const [pattern, setPattern] = useState<ThreeWeeksPatterns>("TwoPosOneAnyTwoCloseAny")
   const [numsOfweeksToAdd, setnumsOfWeeksToAdd] = useState("3")
   const [whereToExtractData, setWhereToExtractData] = useState<WhereToSearch>("Winning")
   const dispatch = useAppDispatch()

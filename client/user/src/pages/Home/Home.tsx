@@ -14,12 +14,9 @@ const head = {
 function Home() {
   useHead(head)
   return (
-    <>
-      <motion.div variants={RoutesVariants} initial={"initial"} animate={"animate"} exit={"exit"} className={styles.home}>
-        <p id={styles.title}>Welcome To Lotto Lens</p>
-      </motion.div>
-      <Luck />
-    </>
+    <motion.div variants={RoutesVariants} initial={"initial"} animate={"animate"} exit={"exit"} className={styles.home}>
+      <p id={styles.title}>Welcome To Lotto Lens</p>
+    </motion.div>
   )
 }
 

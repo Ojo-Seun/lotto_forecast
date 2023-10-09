@@ -1,7 +1,7 @@
 import { GameTypes, Games, Group, WinningOrMachineEvent } from '../interface/types'
 
 type ThreeWeeksPatterns = 'TwoOneTwoAny' | 'TwoPosOneAnyTwoAny' | 'TwoPosTwoAnyOneAny' | 'TwoTwoOneAny' | 'TwoTwoTwoAny' | 'TwoTwoTwoPos' | 'TwoPosOneAnyTwoCloseAny' | 'TwoCloseOneTwoCloseAny' | 'TwoCloseTwoCloseOneAny' | 'TwoPosTwoCloseOneAny'
-type TwoWeeksPatterns = 'TwoCloseTwoClose' | 'TwoPosOnePos' | 'TwoPosTwoPos' | 'TwoCloseTwoAny' | 'TwoCloseTwoClosePos' | 'TwoCloseTwoPos'
+type TwoWeeksPatterns = 'TwoCloseTwoClose' | 'TwoPosOnePos' | 'TwoPosTwoPos' | 'TwoCloseTwoAny' | 'TwoCloseTwoClosePos' | 'TwoCloseTwoPos' | 'TwoPosTwoClose'
 type Patterns = ThreeWeeksPatterns | TwoWeeksPatterns
 type WhereToSearch = 'Winning' | 'Machine'
 
@@ -17,12 +17,10 @@ interface ThreeWeeksMatchFns {
   isMatchThirdEvent: Matcher
 }
 
-interface TwoWeeksMatchFns {
-  isMatchLastEvent: Matcher
-  isMatchSecondEvent: Matcher
-}
+type TwoWeeksMatchFns = Pick<ThreeWeeksMatchFns, 'isMatchLastEvent' | 'isMatchSecondEvent'>
+type OneWeekMatchFn = Pick<ThreeWeeksMatchFns, 'isMatchLastEvent'>
 
-type MatchFns = ThreeWeeksMatchFns | TwoWeeksMatchFns
+type MatchFns = ThreeWeeksMatchFns | TwoWeeksMatchFns | OneWeekMatchFn
 
 interface PatternFns {
   searchInOneGame: (queries: QueryTypes) => Promise<ResultType[]>

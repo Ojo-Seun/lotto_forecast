@@ -3,6 +3,8 @@ import { GameTypes, Games, WhereToSearch } from '../games/interface/types'
 import { RepoService } from '../repository/repo.service'
 import { InsertMany } from './interface/insert_many.interfer'
 import { GetEvents } from './interface/game-events.interface'
+import { GetYearsDTO } from './dto/get-yearsDto'
+import { GetChartDTO } from './dto/get-chartDto'
 
 @Injectable()
 export class DataService {
@@ -40,6 +42,26 @@ export class DataService {
         gameEvents: events,
         targetEvents: this.getTargetEvents(events, whereToExtractData) ?? [],
       }
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.EXPECTATION_FAILED)
+    }
+  }
+
+  async getYears(payload: GetYearsDTO) {
+    try {
+      const model = this.repoService.getGameYearsModel()
+      const res = await model.findOne({ Game: payload.game })
+      return res?.Years
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.EXPECTATION_FAILED)
+    }
+  }
+
+  async getChart(payload: GetChartDTO) {
+    try {
+      const model = this.repoService.getModel(payload.game)
+      const game = await model.find({ Year: payload.year })
+      return game
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.EXPECTATION_FAILED)
     }
@@ -108,8 +130,6 @@ export class DataService {
         response: res,
       }
     } catch (error) {
-      console.log(error.message)
-
       throw new HttpException(error.message, 500)
     }
   }

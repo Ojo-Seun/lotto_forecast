@@ -1,5 +1,4 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { GameTypes, WhereToSearch } from 'src/games/interface/types'
 import { SearchService } from 'src/games/search.service'
 import { TwoWeeksPayload } from './interface/types'
 import { ResultType, TwoWeeksMatchFns } from 'src/games/utils/types'

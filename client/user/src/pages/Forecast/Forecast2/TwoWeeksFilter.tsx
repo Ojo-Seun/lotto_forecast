@@ -28,7 +28,7 @@ function TwoWeeksFilter({ data, setData }: Props) {
   const [operation, setOperation] = useState("MANUAL")
   const [groupToSearch, setGroupToSearch] = useState<TwoWeeksPayload["group"]>("ALL")
   const [gameToSearch, setGameToSearch] = useState<TwoWeeksPayload["game"]>("ALL")
-  const [pattern, setPattern] = useState<TwoWeeksPatterns>("TwoCloseTwoClose")
+  const [pattern, setPattern] = useState<TwoWeeksPatterns>("TwoPosTwoPos")
   const [numsOfweeksToAdd, setnumsOfWeeksToAdd] = useState("3")
   const [numsOfweeksApart, setnumsOfWeeksApart] = useState("1")
   const [whereToExtractData, setWhereToExtractData] = useState<WhereToSearch>("Winning")

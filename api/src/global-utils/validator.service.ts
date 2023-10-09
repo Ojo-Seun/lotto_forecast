@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import { GameTypes, Games, WhereToSearch } from '../games/interface/types'
-import { games, threeWeeksPatterns, twoWeeksPatterns } from '../games/utils/util'
+import { games, ghanas, premmiers, threeWeeksPatterns, twoWeeksPatterns } from '../games/utils/util'
 import { TwoWeeksPayload } from 'src/two-weeks/interface/types'
 import { ThreeWeeksPayload } from 'src/three-weeks/interface/types'
 import { GetEvents } from 'src/data/interface/game-events.interface'
 import { LoginDto } from 'src/auth/dto/login.dto'
 import { CreateUserDto } from 'src/auth/dto/create-user.dto'
 import { SendEmailDto } from 'src/auth/dto/email.dto'
+import { GetChartDTO } from 'src/data/dto/get-chartDto'
+import { GetYearsDTO } from 'src/data/dto/get-yearsDto'
 
 @Injectable()
 export class Validators {
@@ -223,9 +225,18 @@ export class Validators {
     const isValidGame = this.gameNameValidator(data['game'], games as string[])
     const isValidWeeksApart = this.validateWeeksApart(data['weeksApart'])
     const allIsValid = isValidKeys ?? isValidGame ?? isValidWeeksApart
-    if (allIsValid?.err) {
-      return allIsValid
-    }
-    return null
+    return allIsValid
+  }
+
+  getChartValidator(data: GetChartDTO) {
+    const isValidName = this.gameNameValidator(data.game, [...premmiers, ...ghanas])
+    const isValidYear = this.validateNumber(data.year, 'year')
+    const allIsValid = isValidName ?? isValidYear
+    return allIsValid
+  }
+
+  getYearsValidator(data: GetYearsDTO) {
+    const isValidName = this.gameNameValidator(data.game, [...premmiers, ...ghanas])
+    return isValidName
   }
 }

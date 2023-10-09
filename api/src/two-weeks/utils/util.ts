@@ -1,2 +1,2 @@
-const twoWeeksPatterns: Readonly<string[]> = ['TwoCloseTwoClose', 'TwoPosOnePos', 'TwoPosTwoPos', 'TwoCloseTwoClosePos', 'TwoCloseTwoPos', 'TwoCloseTwoAny']
+const twoWeeksPatterns: Readonly<string[]> = ['TwoCloseTwoClose', 'TwoPosOnePos', 'TwoPosTwoPos', 'TwoCloseTwoClosePos', 'TwoCloseTwoPos', 'TwoCloseTwoAny', 'TwoPosTwoClose']
 export { twoWeeksPatterns }

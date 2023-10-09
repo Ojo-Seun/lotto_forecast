@@ -11,6 +11,7 @@ import { GameTypes, Games } from 'src/games/interface/types'
 import { TwoCloseTwoPos } from './two-weeks-pattern-service/twoCloseTwoPos'
 import { TwoPosOnePos } from './two-weeks-pattern-service/twoPosOnePos'
 import { TwoCloseTwoClosePos } from './two-weeks-pattern-service/twoCloseTwoClosePos'
+import { TwoPosTwoClose } from './two-weeks-pattern-service/two-pos-two-close'
 
 @Injectable()
 export class TwoWeeksService {
@@ -24,6 +25,7 @@ export class TwoWeeksService {
     private readonly twoCloseTwoPos: TwoCloseTwoPos,
     private readonly twoPosOnePos: TwoPosOnePos,
     private readonly twoCloseTwoClosePos: TwoCloseTwoClosePos,
+    private readonly twoPosTwoClose: TwoPosTwoClose,
   ) {}
 
   getData() {
@@ -97,6 +99,9 @@ export class TwoWeeksService {
         break
       case 'TwoPosOnePos':
         patternFns = this.twoPosOnePos
+        break
+      case 'TwoPosTwoClose':
+        patternFns = this.twoPosTwoClose
         break
       default:
         throw new HttpException('Invalid two-weeks-search pattern', HttpStatus.BAD_REQUEST)

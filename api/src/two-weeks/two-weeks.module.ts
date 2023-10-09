@@ -10,10 +10,11 @@ import { twoWeeksSearchFns } from './twoWeeksSearchFns'
 import { TwoPosTwoPos } from './two-weeks-pattern-service/twoPosTwoPos'
 import { TwoPosOnePos } from './two-weeks-pattern-service/twoPosOnePos'
 import { TwoCloseTwoPos } from './two-weeks-pattern-service/twoCloseTwoPos'
+import { TwoPosTwoClose } from './two-weeks-pattern-service/two-pos-two-close'
 
 @Module({
   imports: [GamesModule.register(twoWeeksSearchFns)],
   controllers: [TwoWeeksController],
-  providers: [TwoWeeksService, TwoWeeksSearchService, TwoCloseTwoClose, TwoPosTwoPos, TwoCloseTwoClosePos, TwoPosOnePos, TwoCloseTwoPos, TwoCloseTwoAny],
+  providers: [TwoWeeksService, TwoWeeksSearchService, TwoCloseTwoClose, TwoPosTwoPos, TwoCloseTwoClosePos, TwoPosOnePos, TwoCloseTwoPos, TwoCloseTwoAny, TwoPosTwoClose],
 })
 export class TwoWeeksModule {}

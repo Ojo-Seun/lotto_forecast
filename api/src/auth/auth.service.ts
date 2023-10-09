@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt'
 import { InjectModel } from '@nestjs/mongoose'
 import { VerificationCode } from './schema/verification-code.schema'
 import { Model } from 'mongoose'
-import { MailService } from 'src/_Mail/mail.service'
+import { MailService } from 'src/mail/mail.service'
 import { SendEmailDto } from './dto/email.dto'
 
 @Injectable()

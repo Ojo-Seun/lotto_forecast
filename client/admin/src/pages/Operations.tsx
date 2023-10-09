@@ -16,7 +16,6 @@ import ErrorNotification from "../components/error/ErrorNotification";
 import useHead from "../hooks/useHead";
 import { motion } from "framer-motion";
 import { RoutesVariants } from "./routesVariants";
-import Luck from "../components/utils/Luck";
 
 const gameDetailsInitialState = {
   loading: false,
@@ -65,30 +64,27 @@ function Operations() {
   const { data } = operationReturnData;
   const title = operation === "Insert Many" ? "Insert Many Events" : "Insert One Event";
   return (
-    <>
-      <motion.div initial={"initial"} animate={"animate"} exit={"exit"} variants={RoutesVariants} className={styles.container}>
-        <h1 className={styles.title}>{title}</h1>
-        <>{gameDetails?.loading && <LoadingIndicator />}</>
-        <ErrorNotification error={gameDetails.error} />
-        <div className={styles.operations}>
-          <div className={styles.select}>
-            <SelectBox setSelectedOption={setGroup} option={group} title="Select Group" optionsList={groups as string[]} />
-            <SelectBox title="Select Game" option={game} setSelectedOption={setGame} optionsList={group === "PREMMIER" ? (premmiers as string[]) : (ghanas as string[])} />
-            <SelectBox title="Select Operation" option={operation} optionsList={operations} setSelectedOption={setOperation} />
-          </div>
-          <LastTwoEvents events={last2Events} />
-          <AfterUpdateBoard previousEntries={data.previousEntries} newEntries={data.newEntries} lastIndex={lastIndex} nextIndex={nextIndex} />
-          <>
-            {operation === "Insert Many" ? (
-              <InsertManyOperation setOperationReturnData={setOperationReturnData} game={game as Games} group={group as Group} />
-            ) : (
-              <InsertOneOperation lastEvent={last2Events[1] as GameTypes} nextIndex={nextIndex} setOperationReturnData={setOperationReturnData} game={game as Games} group={group as Group} />
-            )}
-          </>
+    <motion.div initial={"initial"} animate={"animate"} exit={"exit"} variants={RoutesVariants} className={styles.container}>
+      <h1 className={styles.title}>{title}</h1>
+      <>{gameDetails?.loading && <LoadingIndicator />}</>
+      <ErrorNotification error={gameDetails.error} />
+      <div className={styles.operations}>
+        <div className={styles.select}>
+          <SelectBox setSelectedOption={setGroup} option={group} title="Select Group" optionsList={groups as string[]} />
+          <SelectBox title="Select Game" option={game} setSelectedOption={setGame} optionsList={group === "PREMMIER" ? (premmiers as string[]) : (ghanas as string[])} />
+          <SelectBox title="Select Operation" option={operation} optionsList={operations} setSelectedOption={setOperation} />
         </div>
-      </motion.div>
-      <Luck />
-    </>
+        <LastTwoEvents events={last2Events} />
+        <AfterUpdateBoard previousEntries={data.previousEntries} newEntries={data.newEntries} lastIndex={lastIndex} nextIndex={nextIndex} />
+        <>
+          {operation === "Insert Many" ? (
+            <InsertManyOperation setOperationReturnData={setOperationReturnData} game={game as Games} group={group as Group} />
+          ) : (
+            <InsertOneOperation lastEvent={last2Events[1] as GameTypes} nextIndex={nextIndex} setOperationReturnData={setOperationReturnData} game={game as Games} group={group as Group} />
+          )}
+        </>
+      </div>
+    </motion.div>
   );
 }
 

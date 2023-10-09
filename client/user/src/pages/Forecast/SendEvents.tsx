@@ -7,7 +7,6 @@ import ErrorNotification from "../../components/error/ErrorNotification"
 import { QueryTypes, ThreeWeeksPayload, TwoWeeksPayload, WinningOrMachineEvent, ResultType } from "../../utils/type"
 import config from "../../app_config"
 import axios from "axios"
-import { useAppSelector } from "../../app/hooks"
 import StaticFiveBoxies from "../../components/utils/ten-boxies-nums/StaticFiveBoxies"
 const URL = config.get("BASE_URL")
 
@@ -60,7 +59,6 @@ function SendEvents({ payloadObj, path, numOfResultsToUse, data, setData, events
         .post(`${URL}/${path}`, { payload })
         .then((res) => {
           const response: ResultType[] = res.data?.length > 0 ? res.data : []
-          console.log(response)
           setData((prev) => ({ ...prev, data: response }))
         })
         .catch((err) => {

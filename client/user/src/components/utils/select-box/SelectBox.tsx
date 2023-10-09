@@ -22,7 +22,6 @@ function SelectBox({ optionsList, title, setSelectedOption, option }: Props) {
   const [activeSelectionBox, setActiveSelectionBox] = useState(false)
   const defaultOption = "Select"
   const selectedOption = optionsList.includes(option) ? option : defaultOption
-
   // Shows and hide list
   const handleListVisibility = () => {
     setShowList((prev) => !prev)
@@ -56,24 +55,12 @@ function SelectBox({ optionsList, title, setSelectedOption, option }: Props) {
           </div>
         ) : null}
       </>
-      <div
-        className={`${styles.selectionBox} ${
-          activeSelectionBox ? styles.active : ""
-        }`}
-        onClick={selectionBoxOperations}
-      >
+      <div className={`${styles.selectionBox} ${activeSelectionBox ? styles.active : ""}`} onClick={selectionBoxOperations}>
         {selectedOption}
       </div>
       <AnimatePresence>
         {showList ? (
-          <motion.ul
-            key={"list"}
-            variants={ListVariants}
-            initial="hidden"
-            animate="visible"
-            exit={"exist"}
-            className={styles.options}
-          >
+          <motion.ul key={"list"} variants={ListVariants} initial="hidden" animate="visible" exit={"exist"} className={styles.options}>
             {optionsList.map((option, index) => (
               <motion.li
                 variants={{

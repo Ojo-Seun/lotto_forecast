@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer"
 import { AnimatePresence } from "framer-motion"
 import { Route, Routes, useLocation } from "react-router-dom"
 import LoadingIndicator from "./components/utils/LodingIndicator"
+import Luck from "./components/utils/Luck"
 
 const LazyHome = lazy(() => import("./pages/Home/Home"))
 const LazyForecast2 = lazy(() => import("./pages/Forecast/Forecast2/ForecastWith2WeeksResults"))
@@ -19,6 +20,7 @@ function App() {
       <div id="headers">
         <Header />
         <Navbar />
+        <Luck />
       </div>
       <main>
         <Suspense fallback={<LoadingIndicator />}>
