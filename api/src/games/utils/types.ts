@@ -1,6 +1,7 @@
+import { OneWeekPayload } from 'src/one-week/interface/types'
 import { GameTypes, Games, Group, WinningOrMachineEvent } from '../interface/types'
 
-type ThreeWeeksPatterns = 'TwoOneTwoAny' | 'TwoPosOneAnyTwoAny' | 'TwoPosTwoAnyOneAny' | 'TwoTwoOneAny' | 'TwoTwoTwoAny' | 'TwoTwoTwoPos' | 'TwoPosOneAnyTwoCloseAny' | 'TwoCloseOneTwoCloseAny' | 'TwoCloseTwoCloseOneAny' | 'TwoPosTwoCloseOneAny'
+type ThreeWeeksPatterns = 'TwoOneTwoAny' | 'TwoPosOneAnyTwoAny' | 'TwoPosTwoAnyOneAny' | 'TwoTwoOneAny' | 'TwoTwoTwoAny' | 'TwoTwoTwoPos' | 'TwoPosOneAnyTwoCloseAny' | 'TwoCloseOneTwoCloseAny' | 'TwoCloseTwoCloseOneAny' | 'TwoPosTwoCloseOneAny' | 'TwoOneOnePos'
 type TwoWeeksPatterns = 'TwoCloseTwoClose' | 'TwoPosOnePos' | 'TwoPosTwoPos' | 'TwoCloseTwoAny' | 'TwoCloseTwoClosePos' | 'TwoCloseTwoPos' | 'TwoPosTwoClose'
 type Patterns = ThreeWeeksPatterns | TwoWeeksPatterns
 type WhereToSearch = 'Winning' | 'Machine'
@@ -18,9 +19,12 @@ interface ThreeWeeksMatchFns {
 }
 
 type TwoWeeksMatchFns = Pick<ThreeWeeksMatchFns, 'isMatchLastEvent' | 'isMatchSecondEvent'>
-type OneWeekMatchFn = Pick<ThreeWeeksMatchFns, 'isMatchLastEvent'>
+interface OneWeekMatchFns {
+  isMatchInWin: Matcher
+  isMatchInMac: Matcher
+}
 
-type MatchFns = ThreeWeeksMatchFns | TwoWeeksMatchFns | OneWeekMatchFn
+type MatchFns = ThreeWeeksMatchFns | TwoWeeksMatchFns
 
 interface PatternFns {
   searchInOneGame: (queries: QueryTypes) => Promise<ResultType[]>
@@ -51,7 +55,7 @@ interface TwoWeeksPayload {
   whereToExtract: WhereToSearch
   gameToForecast: Games
 }
-type QueryTypes = TwoWeeksPayload | ThreeWeeksPayload
+type QueryTypes = TwoWeeksPayload | ThreeWeeksPayload | OneWeekPayload
 
 interface SearchFns {
   searchDownward: SearchUpOrDown
@@ -59,4 +63,4 @@ interface SearchFns {
 }
 
 type SearchUpOrDown = (game: GameTypes[], whereToSearch: WhereToSearch, queries: QueryTypes, matchFns: MatchFns) => Promise<GameTypes[]>
-export { MatchFns, SearchFns, ResultType, PatternFns, QueryTypes, SearchUpOrDown, ThreeWeeksPayload, TwoWeeksPayload, ThreeWeeksMatchFns, TwoWeeksMatchFns }
+export { MatchFns, SearchFns, ResultType, PatternFns, QueryTypes, SearchUpOrDown, ThreeWeeksPayload, TwoWeeksPayload, ThreeWeeksMatchFns, TwoWeeksMatchFns, OneWeekMatchFns }

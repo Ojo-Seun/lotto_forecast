@@ -12,7 +12,7 @@ import { SearchService } from './search.service'
   controllers: [],
 })
 export class GamesModule {
-  static register(searchFns: SearchFns): DynamicModule {
+  static register(searchFns?: SearchFns): DynamicModule {
     const SEARCHFns: Provider = {
       provide: 'SEARCH-FUNCTIONS',
       useValue: searchFns,

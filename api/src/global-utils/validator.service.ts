@@ -9,6 +9,8 @@ import { CreateUserDto } from 'src/auth/dto/create-user.dto'
 import { SendEmailDto } from 'src/auth/dto/email.dto'
 import { GetChartDTO } from 'src/data/dto/get-chartDto'
 import { GetYearsDTO } from 'src/data/dto/get-yearsDto'
+import { OneWeekPayload } from 'src/one-week/interface/types'
+import { oneWeekPatterns } from 'src/one-week/utils/repo'
 
 @Injectable()
 export class Validators {
@@ -219,6 +221,22 @@ export class Validators {
     return { err: false, message: '' }
   }
 
+  oneWeekDataValidator(payload: OneWeekPayload) {
+    const keys = ['lastEvent', 'game', 'group', 'numOfWeeksToAdd', 'pattern']
+    const isValidKeys = this.keysValidator(keys, payload)
+    if (isValidKeys?.err) return isValidKeys
+    const { lastEvent, game, gameToForecast, group, pattern, numOfWeeksToAdd } = payload
+    const isValidWinEvent = this.validateEvent(lastEvent.Winning)
+    const isValidWinMac = this.validateEvent(lastEvent.Machine)
+    const isValidGame = this.gameNameValidator(game, [...games, 'ALL'])
+    const isValidGameToForecast = this.gameNameValidator(gameToForecast, [...games])
+    const isValidGroup = this.groupValidator(group)
+    const isValidWtAdd = this.validateNofWeeksToaDD(numOfWeeksToAdd)
+    const isPattern = this.patternValidator(pattern, oneWeekPatterns as string[])
+    const allIsValid = isValidGame ?? isPattern ?? isValidGameToForecast ?? isValidGroup ?? isValidWtAdd ?? isValidWinEvent ?? isValidWinMac
+    if (allIsValid?.err) return allIsValid
+    return null
+  }
   getEventsValidator(data: GetEvents) {
     const keys = ['game', 'weeksApart']
     const isValidKeys = this.keysValidator(keys, data)

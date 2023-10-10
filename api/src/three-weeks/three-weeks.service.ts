@@ -13,6 +13,7 @@ import { TwoPosTwoCloseOneAny } from './threeWeeksPatternsService/twoPosTwoClose
 import { TwoTwoOneAny } from './threeWeeksPatternsService/twoTwoOneAny'
 import { TwoTwoTwoAny } from './threeWeeksPatternsService/twoTwoTwoAny'
 import { TwoTwoTwoPos } from './threeWeeksPatternsService/twoTwoTwoPos'
+import { TwoOneOnePos } from './threeWeeksPatternsService/two-one-one-pos'
 
 @Injectable()
 export class ThreeWeeksService {
@@ -29,6 +30,7 @@ export class ThreeWeeksService {
     private readonly twoTwoTwoAny: TwoTwoTwoAny,
     private readonly twoTwoTwoPos: TwoTwoTwoPos,
     private readonly twoCloseOneTwoCloseAny: TwoCloseOneTwoCloseAny,
+    private readonly twoOneOnePos: TwoOneOnePos,
   ) {}
 
   getData() {
@@ -81,6 +83,9 @@ export class ThreeWeeksService {
         break
       case 'TwoTwoTwoPos':
         patternFns = this.twoTwoTwoPos
+        break
+      case 'TwoOneOnePos':
+        patternFns = this.twoOneOnePos
         break
       default:
         throw new HttpException('Invalid three-weeks-search pattern', HttpStatus.BAD_REQUEST)

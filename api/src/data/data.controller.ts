@@ -63,7 +63,7 @@ export class DataController {
   }
 
   @Patch('insert_one')
-  @Auth('ADMINISTRATOR')
+  // @Auth('ADMINISTRATOR')
   @UsePipes(InserOnePipe)
   @ApiBody({ type: DataInsertOneDto })
   async insertOne(@Body('payload') data: DataInsertOneDto) {

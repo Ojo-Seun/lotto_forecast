@@ -14,10 +14,11 @@ import { TwoTwoOneAny } from './threeWeeksPatternsService/twoTwoOneAny'
 import { TwoTwoTwoAny } from './threeWeeksPatternsService/twoTwoTwoAny'
 import { TwoTwoTwoPos } from './threeWeeksPatternsService/twoTwoTwoPos'
 import { threeWeeksSeachFns } from './threeWeeksSearchFns'
+import { TwoOneOnePos } from './threeWeeksPatternsService/two-one-one-pos'
 
 @Module({
   imports: [GamesModule.register(threeWeeksSeachFns)],
   controllers: [ThreeWeeksController],
-  providers: [ThreeWeeksService, ThreeWeeksSearchService, TwoCloseOneTwoCloseAny, TwoCloseTwoCloseOneAny, TwoOneTwoAny, TwoPosOneAnyTwoAny, TwoPosOneAnyTwoCloseAny, TwoPosTwoAnyOneAny, TwoPosTwoCloseOneAny, TwoTwoOneAny, TwoTwoTwoAny, TwoTwoTwoPos],
+  providers: [ThreeWeeksService, TwoOneOnePos, ThreeWeeksSearchService, TwoCloseOneTwoCloseAny, TwoCloseTwoCloseOneAny, TwoOneTwoAny, TwoPosOneAnyTwoAny, TwoPosOneAnyTwoCloseAny, TwoPosTwoAnyOneAny, TwoPosTwoCloseOneAny, TwoTwoOneAny, TwoTwoTwoAny, TwoTwoTwoPos],
 })
 export class ThreeWeeksModule {}

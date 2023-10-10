@@ -13,9 +13,10 @@ import { GamesModule } from './games/games.module'
 import { AuthModule } from './auth/auth.module'
 import { UsersModule } from './users/users.module'
 import { MailModule } from './mail/mail.module'
+import { OneWeekModule } from './one-week/one-week.module';
 
 @Module({
-  imports: [ThrottlerModule.forRoot([ThrottlerOptions]), MailModule, ConfigModule.forRoot(ConfigOptions), ThreeWeeksModule, TwoWeeksModule, MongooseModule.forRootAsync(MongooseModuleAsyncOptions), GamesModule, DataModule, UtilsModule, EventEmitterModule.forRoot(), AuthModule, UsersModule],
+  imports: [ThrottlerModule.forRoot([ThrottlerOptions]), MailModule, ConfigModule.forRoot(ConfigOptions), ThreeWeeksModule, TwoWeeksModule, MongooseModule.forRootAsync(MongooseModuleAsyncOptions), GamesModule, DataModule, UtilsModule, EventEmitterModule.forRoot(), AuthModule, UsersModule, OneWeekModule],
   controllers: [],
   providers: [
     {
