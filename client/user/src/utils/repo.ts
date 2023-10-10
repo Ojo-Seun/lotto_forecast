@@ -60,6 +60,7 @@ const threeWeeksPatterns: Readonly<string[]> = [
   "TwoCloseOneTwoCloseAny",
   "TwoCloseTwoCloseOneAny",
   "TwoPosTwoCloseOneAny",
+  "TwoOneOnePos",
 ]
 const twoWeeksPatterns: Readonly<string[]> = ["TwoCloseTwoClose", "TwoPosOnePos", "TwoPosTwoPos", "TwoCloseTwoClosePos", "TwoCloseTwoPos", "TwoCloseTwoAny", "TwoPosTwoClose"]
 

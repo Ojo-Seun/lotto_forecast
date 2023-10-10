@@ -10,14 +10,6 @@ import axios from "axios"
 import StaticFiveBoxies from "../../components/utils/ten-boxies-nums/StaticFiveBoxies"
 const URL = config.get("BASE_URL")
 
-const initailInputs = {
-  box0: 0,
-  box1: 0,
-  box2: 0,
-  box3: 0,
-  box4: 0,
-}
-
 const dataInitialState = {
   loading: false,
   error: { err: false, message: "" },

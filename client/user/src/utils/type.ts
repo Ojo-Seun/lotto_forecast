@@ -72,6 +72,7 @@ type ThreeWeeksPatterns =
   | "TwoCloseOneTwoCloseAny"
   | "TwoCloseTwoCloseOneAny"
   | "TwoPosTwoCloseOneAny"
+  | "TwoOneOnePos"
 type TwoWeeksPatterns = "TwoCloseTwoClose" | "TwoPosOnePos" | "TwoPosTwoPos" | "TwoCloseTwoAny" | "TwoCloseTwoClosePos" | "TwoCloseTwoPos" | "TwoPosTwoClose"
 
 interface ThreeWeeksPayload {
