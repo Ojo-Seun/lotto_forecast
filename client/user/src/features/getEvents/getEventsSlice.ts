@@ -8,14 +8,12 @@ interface State {
   loading: boolean
   error: { err: boolean; message: string }
   gameEvents: Data
-  targetEvents: number[][]
 }
 
 const initialState: State = {
   loading: false,
   error: { err: false, message: "" },
   gameEvents: defaultEvents,
-  targetEvents: [[0, 0, 0, 0, 0]],
 }
 
 export const getGameEventsAsync = createAsyncThunk("gameEvents/getGameEvents", async (payload: GetEvents) => {
@@ -35,13 +33,12 @@ const gameEventsSlice = createSlice({
     builder.addCase(getGameEventsAsync.fulfilled, (state, action: PayloadAction<State>) => {
       state.loading = false
       state.gameEvents = action.payload.gameEvents
-      state.targetEvents = action.payload.targetEvents
     })
 
     builder.addCase(getGameEventsAsync.rejected, (state, action) => {
-      console.log(action.payload)
+      const { message } = action.error
       state.loading = false
-      state.error = { err: true, message: "error occured" }
+      state.error = { err: true, message: message ?? "error occured" }
     })
   },
 })

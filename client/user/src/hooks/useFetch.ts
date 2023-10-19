@@ -1,38 +1,49 @@
 import axios from "axios"
 import config from "../app_config"
+import { useAppSelector } from "../app/hooks"
 
 const URL = config.get("BASE_URL")
 
-interface Status {
+interface Status<T> {
   error: { err: boolean; message: string }
   loading: boolean
-  data: any
+  data: T
 }
 
-interface Props {
-  operation: "post" | "get" | "patch"
-  setStatus: React.Dispatch<React.SetStateAction<Status>>
-  initialData: any
+interface Props<T> {
+  operation: "post" | "get" | "patch" | "delete"
   path: string
   payload?: any
+  setStatus: React.Dispatch<React.SetStateAction<Status<T>>>
+  initailValue: T
 }
 
-function useFetch({ operation, setStatus, initialData, path, payload }: Props) {
-  const fetch = () => {
-    setStatus((prev) => ({ ...prev, loading: true, error: { err: false, message: "" } }))
+interface Option<T> {
+  cb: (data: T) => void
+}
 
+function useFetch<T>({ operation, path, payload, initailValue, setStatus }: Props<T>) {
+  const user = useAppSelector((state) => state.user)
+  const fetch = (op?: Option<T>) => {
+    setStatus((prev) => ({ ...prev, loading: true, data: initailValue, error: { err: true, message: "" } }))
     const sendQueries = () => {
-      axios[operation](`${URL}/${path}`, { payload })
+      axios[operation](`${URL}/${path}`, { payload }, { headers: { Authorization: `Bearer ${user.access_token}` } })
         .then((res) => {
-          const data = res?.data ?? initialData
+          const data = res.data ? res.data : initailValue
           setStatus((prev) => ({ ...prev, data }))
+          if (op?.cb) {
+            op.cb(data)
+          }
         })
         .catch((err) => {
-          const ERROR = err.response?.data?.message || err?.message
-          setStatus((prev) => ({ ...prev, error: { err: true, message: ERROR } }))
+          const Err = err.response?.data?.message ?? err.message
+          setStatus((prev) => ({ ...prev, error: { err: true, message: Err } }))
         })
-        .finally(() => setStatus((prev) => ({ ...prev, loading: false })))
+        .finally(() => {
+          setStatus((prev) => ({ ...prev, loading: false }))
+        })
     }
+
     sendQueries()
   }
   return [fetch]

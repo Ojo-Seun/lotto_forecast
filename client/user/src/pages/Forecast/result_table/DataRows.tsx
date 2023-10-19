@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect } from "react"
 import TargetRow from "./TargetRow"
 import NormalRow from "./NormalRow"
-import { GameTypes } from "../../../utils/type"
+import { GameTypes, WhereToSearch } from "../../../utils/type"
 
 interface Props {
   games: GameTypes[]
+  whereToExtractData?: WhereToSearch
 }
 
-function DataRows({ games }: Props) {
+function DataRows({ games, whereToExtractData }: Props) {
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement
@@ -32,7 +33,7 @@ function DataRows({ games }: Props) {
     <>
       <Fragment>
         {games.map((data, index) => {
-          return <Fragment key={index}>{data.target ? <TargetRow event={data} key={data._id} /> : <NormalRow event={data} key={data.Index} />}</Fragment>
+          return <Fragment key={index}>{data.target ? <TargetRow whereToExtractData={whereToExtractData} event={data} key={data._id} /> : <NormalRow event={data} key={data.Index} />}</Fragment>
         })}
       </Fragment>
     </>

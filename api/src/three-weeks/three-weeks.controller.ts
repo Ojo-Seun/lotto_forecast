@@ -6,6 +6,7 @@ import { games, ghanas, premmiers, twoWeeksPatterns } from 'src/games/utils/util
 import { ThreeWeeksDataPayloadPipe } from './pipes/threeWeeksDataPipe'
 import { ThreeWeeksService } from './three-weeks.service'
 import { ErrorObjectService } from 'src/global-utils/error-object.service'
+import { Auth } from 'src/auth/decorators/auth.decorator'
 
 const schema = {
   type: 'object',
@@ -27,6 +28,7 @@ const schema = {
 }
 
 @Controller('games/three_weeks')
+@Auth('SUBSCRIBER')
 @ApiTags('Game Forecast With Last 3 Weeks Result')
 export class ThreeWeeksController {
   constructor(private readonly threeWeeksService: ThreeWeeksService, private readonly errorService: ErrorObjectService) {}

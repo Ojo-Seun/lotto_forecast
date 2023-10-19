@@ -6,6 +6,7 @@ import TargetNumber from "./TargetNumber"
 
 interface Props {
   event: GameTypes
+  whereToExtractData?: WhereToSearch
 }
 
 const TrVariant: AnimationProps["variants"] = {
@@ -14,7 +15,7 @@ const TrVariant: AnimationProps["variants"] = {
   exit: { y: -10 },
 }
 
-function TargetRow({ event }: Props) {
+function TargetRow({ event, whereToExtractData }: Props) {
   const { Winning, Machine, Index, Date, WT, MT, Name, direction, Category, Ev, weeksApart } = event
 
   return (
@@ -22,11 +23,11 @@ function TargetRow({ event }: Props) {
       <td>{Index}</td>
       <td>{Ev}</td>
       <td>{Date}</td>
-      <TargetNumber targetEvent={event} where="Winning" targetNum={Winning[0]} />
-      <TargetNumber targetEvent={event} where="Winning" targetNum={Winning[1]} />
-      <TargetNumber targetEvent={event} where="Winning" targetNum={Winning[2]} />
-      <TargetNumber targetEvent={event} where="Winning" targetNum={Winning[3]} />
-      <TargetNumber targetEvent={event} where="Winning" targetNum={Winning[4]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Winning" targetNum={Winning[0]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Winning" targetNum={Winning[1]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Winning" targetNum={Winning[2]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Winning" targetNum={Winning[3]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Winning" targetNum={Winning[4]} />
       <td>{WT}</td>
       <td style={{ backgroundColor: "black", color: "green" }}>
         {direction === "down" ? (
@@ -39,11 +40,11 @@ function TargetRow({ event }: Props) {
           </>
         )}
       </td>
-      <TargetNumber targetEvent={event} where="Machine" targetNum={Machine[0]} />
-      <TargetNumber targetEvent={event} where="Machine" targetNum={Machine[1]} />
-      <TargetNumber targetEvent={event} where="Machine" targetNum={Machine[2]} />
-      <TargetNumber targetEvent={event} where="Machine" targetNum={Machine[3]} />
-      <TargetNumber targetEvent={event} where="Machine" targetNum={Machine[4]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Machine" targetNum={Machine[0]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Machine" targetNum={Machine[1]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Machine" targetNum={Machine[2]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Machine" targetNum={Machine[3]} />
+      <TargetNumber whereToExtractData={whereToExtractData} targetEvent={event} where="Machine" targetNum={Machine[4]} />
       <td>{MT}</td>
       <td>{Name}</td>
       <td>{Category}</td>

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { games, ghanas, premmiers, threeWeeksPatterns, twoWeeksPatterns, groups, lastAndThirdWeeksPatterns } from '../games/utils/util'
+import { games, ghanas, premmiers, threeWeeksPatterns, twoWeeksPatterns, groups } from '../games/utils/util'
 
 @Injectable()
 export class PayloadService {
@@ -8,7 +8,6 @@ export class PayloadService {
   premmiers = premmiers
   threeWeeksPatterns = threeWeeksPatterns
   twoWeeksPatterns = twoWeeksPatterns
-  lastAndThirdWeeksPatterns = lastAndThirdWeeksPatterns
   groups = groups
   constructor() {}
 
@@ -30,10 +29,6 @@ export class PayloadService {
 
   getTwoWeeksPatterns() {
     return this.twoWeeksPatterns
-  }
-
-  getLastAndTirdWeeksPatterns() {
-    return this.lastAndThirdWeeksPatterns
   }
 
   getGroups() {

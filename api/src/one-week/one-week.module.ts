@@ -7,10 +7,11 @@ import { TwoWinTwoMac } from './one-week-patterns-service/two-win-two-mac'
 import { TwoWinOneMac } from './one-week-patterns-service/two-win-one-mac'
 import { OneWinOneMac } from './one-week-patterns-service/one-win-one-mac'
 import { OneWinTwoMac } from './one-week-patterns-service/one-win-two-mac'
+import { TwoWinMacAny } from './one-week-patterns-service/two-win-mac-any'
 
 @Module({
   imports: [GamesModule.register()],
   controllers: [OneWeekController],
-  providers: [OneWeekService, OneWeekSearchService, TwoWinTwoMac, TwoWinOneMac, OneWinOneMac, OneWinTwoMac],
+  providers: [OneWeekService, OneWeekSearchService, TwoWinTwoMac, TwoWinMacAny, TwoWinOneMac, OneWinOneMac, OneWinTwoMac],
 })
 export class OneWeekModule {}

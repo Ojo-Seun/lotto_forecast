@@ -1,9 +1,10 @@
 import React from "react"
-import { games, threeWeeksPatterns, twoWeeksPatterns } from "../utils/repo"
-import { CreateUser, EmailVerification, Games, Login, SendEmail, ThreeWeeksPayload, TwoWeeksPayload, WhereToSearch } from "../utils/type"
+import { games, oneWeekPatterns, threeWeeksPatterns, twoWeeksPatterns } from "../utils/repo"
+import { CreateUser, Login, OneWeekPayload, ResetPass, SendEmail, SendPassResetCode, ThreeWeeksPayload, TwoWeeksPayload, WhereToSearch } from "../utils/type"
 
 const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-const passFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,30}$/
+const passFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$/
+
 const nameFormat = /^[A-Za-z]{3,30}(\s[A-Za-z]{3,30})?$/
 const codeFormat = /^[0-9]{6}$/
 
@@ -144,17 +145,15 @@ function loginInputsValidator(payload: Login) {
 }
 
 function registerInputsValidator(payload: CreateUser) {
-  const keys = ["name", "email", "password"]
+  const keys = ["name", "email", "password", "code"]
   const isValidKeys = keysValidator(keys, payload)
   if (isValidKeys?.err) return isValidKeys
-  const { name, email, password } = payload
+  const { name, email, password, code } = payload
   const isValidName = regexValidator("name", name, nameFormat)
+  const isValidCode = regexValidator("code", code, codeFormat)
   const isValid = loginInputsValidator({ email, password })
-  const allIsValid = isValidName ?? isValid
-  if (allIsValid?.err) {
-    return allIsValid
-  }
-  return null
+  const allIsValid = isValidName ?? isValid ?? isValidCode
+  return allIsValid
 }
 
 function sendMailInputsValidator(payload: SendEmail) {
@@ -165,28 +164,60 @@ function sendMailInputsValidator(payload: SendEmail) {
   const isValidName = regexValidator("name", name, nameFormat)
   const isValidEmail = regexValidator("email", email, emailFormat)
   const allIsValid = isValidName ?? isValidEmail
-  if (allIsValid?.err) {
-    return allIsValid
-  }
-  return null
+  return allIsValid
 }
 
-function verifyEmailValidator(payload: EmailVerification) {
+function resetPassValidator(payload: ResetPass) {
+  const keys = ["email", "code", "password"]
+  const isValidKeys = keysValidator(keys, payload)
+  if (isValidKeys?.err) return isValidKeys
+  const { email, code, password } = payload
+  const isValidCode = regexValidator("code", code, codeFormat)
+  const isValid = loginInputsValidator({ email, password })
+  const allIsValid = isValidCode ?? isValid
+  return allIsValid
+}
+
+function sendPassResetCodeValidator(payload: SendPassResetCode) {
   const keys = ["email", "code"]
   const isValidKeys = keysValidator(keys, payload)
   if (isValidKeys?.err) return isValidKeys
   const { email, code } = payload
-  const isValidEmail = regexValidator("email", email, emailFormat)
   const isValidCode = regexValidator("code", code, codeFormat)
-  const allIsValid = isValidEmail ?? isValidCode
-  if (allIsValid?.err) {
-    return allIsValid
-  }
-  return null
+  const isValidEmail = regexValidator("email", email, emailFormat)
+  const allIsValid = isValidCode ?? isValidEmail
+  return allIsValid
+}
+
+function oneWeekDataValidator(payload: OneWeekPayload) {
+  const keys = ["lastEvent", "game", "group", "numOfWeeksToAdd", "pattern"]
+  const isValidKeys = keysValidator(keys, payload)
+  if (isValidKeys?.err) return isValidKeys
+  const { lastEvent, game, gameToForecast, group, pattern, numOfWeeksToAdd } = payload
+  const isValidWinEvent = validateEvent(lastEvent.Winning)
+  const isValidWinMac = validateEvent(lastEvent.Machine)
+  const isValidGame = gameNameValidator(game, [...games, "ALL"])
+  const isValidGameToForecast = gameNameValidator(gameToForecast, [...games])
+  const isValidGroup = groupValidator(group)
+  const isValidWtAdd = validateNofWeeksToaDD(numOfWeeksToAdd)
+  const isPattern = patternValidator(pattern, oneWeekPatterns as string[])
+  const allIsValid = isValidGame ?? isPattern ?? isValidGameToForecast ?? isValidGroup ?? isValidWtAdd ?? isValidWinEvent ?? isValidWinMac
+  return allIsValid
 }
 
 function useValidators() {
-  return { validatEventeNum, twoWeekDataValidator, threeWeekDataValidator, loginInputsValidator, registerInputsValidator, sendMailInputsValidator, verifyEmailValidator }
+  return {
+    validatEventeNum,
+    regexValidator,
+    twoWeekDataValidator,
+    oneWeekDataValidator,
+    threeWeekDataValidator,
+    loginInputsValidator,
+    registerInputsValidator,
+    sendMailInputsValidator,
+    sendPassResetCodeValidator,
+    resetPassValidator,
+  }
 }
 
 export default useValidators

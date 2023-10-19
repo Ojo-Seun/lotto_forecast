@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#container {
+  position: relative;
+  width: 20%;
+  background-color: aliceblue;
+  border-radius: 2em;
+  overflow: hidden;
+}
+
+#container::before {
+  top: -5em;
+  left: -2em;
+  position: absolute;
+  content: "";
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+  background-color: rgba(0, 255, 255, 0.3);
+}
+
+#container::after {
+  top: -1em;
+  left: -6em;
+  position: absolute;
+  content: "";
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+  background-color: rgba(0, 255, 255, 0.3);
+}
+#title {
+  margin-top: 1em;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2em;
+}
+button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: aqua;
+}
+#logo {
+  text-align: center;
+}
+#submit {
+  text-align: center;
+  width: 100%;
+}
+#submit button {
+  border-radius: 1em;
+  padding: 1em;
+  width: 60%;
+  background-color: aliceblue;
+  color: aqua;
+  margin: auto;
+  border: 1px solid var(--primary_color_dark);
+}
+#form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+#form::after {
+  position: absolute;
+  content: "";
+  width: 3em;
+  height: 5px;
+  background-color: var(--primary_color_dark);
+  border-radius: 5px;
+  bottom: -3.5em;
+}
+.inputWrapper {
+  position: relative;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+#sendCode {
+  position: absolute;
+  right: 1em;
+  top: 60%;
+  font-weight: 100;
+  font-size: 12px;
+}
+.inputIcons {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  object-fit: contain;
+}
+
+.inputWrapper label {
+  font-weight: bold;
+}
+.inputWrapper input {
+  padding: 1em;
+  border-radius: 1em;
+  outline: none;
+  border: none;
+  caret-color: aqua;
+  background-color: #282c34;
+  color: white;
+}
+
+.inputErr {
+  overflow: hidden;
+  text-align: center;
+  color: orange;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 1em 0;
+  font-size: 12px;
+}

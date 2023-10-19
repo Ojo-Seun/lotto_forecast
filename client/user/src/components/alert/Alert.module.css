@@ -1,0 +1,45 @@
+#alert {
+  position: absolute;
+  width: 20em;
+  height: 20vh;
+  background-color: aliceblue;
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  top: 25%;
+  left: 40%;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.5), -2px -2px rgba(0, 0, 0, 0.5);
+}
+#logo {
+  object-fit: contain;
+}
+#message {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 1em 0;
+}
+#btn {
+  outline: none;
+  border: none;
+  position: absolute;
+  top: 1em;
+  right: 2em;
+  color: gray;
+  cursor: pointer;
+}
+#alert::before {
+  position: absolute;
+  content: "";
+  height: 5px;
+  width: 10em;
+  background-color: orchid;
+  left: 5em;
+  border-radius: 5px;
+  bottom: 1em;
+}

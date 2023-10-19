@@ -10,6 +10,8 @@ export class VerificationCode {
 
   @Prop({ type: String, required: true, match: codeFormat })
   code: string
+  @Prop({ type: Number, required: true })
+  exp: number
 }
 
 export const VerificationCodeSchema = SchemaFactory.createForClass(VerificationCode)

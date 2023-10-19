@@ -8,7 +8,7 @@ import ChartTable from "./ChartTable"
 import ErrorNotification from "../error/ErrorNotification"
 import LoadingIndicator from "../utils/LodingIndicator"
 const path = "games/data/chart"
-const initialValues = {
+const initialState = {
   error: { err: false, message: "" },
   loading: false,
   data: [] as Data,
@@ -21,14 +21,14 @@ const Variants = {
   exit: { opacity: 0, transition: { duration: 0.5 }, top: -20 },
 }
 function Chart() {
-  const [chart, setchart] = useState(initialValues)
+  const [chart, setchart] = useState(initialState)
   const [game, setGame] = useState("Select")
   const [year, setYear] = useState("Select")
-
-  const [fetch] = useFetch({ path, setStatus: setchart, operation: "post", payload: { game, year: parseInt(year) }, initialData: [] })
+  const [fetch] = useFetch<Data>({ operation: "post", payload: { game, year: parseInt(year) }, path, initailValue: initialState.data, setStatus: setchart })
 
   useEffect(() => {
     if (game === "Select" || year === "Select") return
+
     fetch()
   }, [year, game])
 

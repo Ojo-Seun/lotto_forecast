@@ -8,7 +8,7 @@ export class ErrorObjectService {
         succsess: false,
         error,
         statusCode: status,
-        cause,
+        message: cause,
       },
       status,
       options: { cause: cause },

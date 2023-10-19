@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  --nav-with: 20em;
+  --nav-with: 30em;
 }
 
 .profile {
@@ -85,6 +85,26 @@
   color: var(--primary_color_light);
 }
 
+#loginBtn {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 2em;
+}
+#loginBtn button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: aqua;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#loginBtn button:hover {
+  opacity: 0.6;
+}
+
 .dropDown > div {
   display: flex;
   flex-direction: column;
@@ -115,7 +135,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(var(--nav-with/3));
+  width: calc(var(--nav-with/4));
 }
 
 .link a {
@@ -130,14 +150,18 @@
 }
 
 .nav .link:nth-child(1).selected ~ .indicator {
-  transform: translateX(1.5em);
+  transform: translateX(1.93em);
 }
 .nav .link:nth-child(2).selected ~ .indicator {
-  transform: translateX(7.4em);
+  transform: translateX(8.8em);
 }
 
 .nav .link:nth-child(3).selected ~ .indicator {
-  transform: translateX(14.4em);
+  transform: translateX(16.3em);
+}
+
+.nav .link:nth-child(4).selected ~ .indicator {
+  transform: translateX(24.01em);
 }
 
 .link {

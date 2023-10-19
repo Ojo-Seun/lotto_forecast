@@ -21,13 +21,13 @@ export const mailerOptions: MailerAsyncOptions = {
         from: '"No Reply" <lottolens2@gmail.com>',
       },
       template: {
-        dir: './dist/_Mail/templates',
+        dir: './dist/mail/templates',
         adapter: new EjsAdapter(), // new EjsAdapter()
         options: {
           strict: isProduction,
         },
       },
-      preview: !isProduction,
+      preview: false,
     }
   },
 

@@ -9,20 +9,27 @@ import ErrorNotification from "../../../components/error/ErrorNotification"
 import SendEvents from "../SendEvents"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { getGameEventsAsync } from "../../../features/getEvents/getEventsSlice"
+import useValidators from "../../../hooks/useValidators"
+import StaticFiveBoxies from "../../../components/utils/ten-boxies-nums/StaticFiveBoxies"
 
-const gameEventsInitialState = {
-  loading: false,
-  error: { err: false, message: "" },
-  gameEvents: defaultEvents as typeof defaultEvents | GameTypes[],
-  targetEvents: [[0, 0, 0, 0, 0]],
+interface ErrorObj {
+  err: boolean
+  message: string
+}
+interface State {
+  loading: boolean
+  error: ErrorObj
+  data: ResultType[]
 }
 
 interface Props {
-  setData: React.Dispatch<React.SetStateAction<{ loading: boolean; error: { err: boolean; message: string }; data: ResultType[] }>>
-  data: { loading: boolean; error: { err: boolean; message: string }; data: ResultType[] }
+  setData: React.Dispatch<React.SetStateAction<State>>
+  data: State
+  setWhereToExtractData: React.Dispatch<React.SetStateAction<WhereToSearch>>
+  whereToExtractData: WhereToSearch
 }
 
-function TwoWeeksFilter({ data, setData }: Props) {
+function TwoWeeksFilter({ data, setData, whereToExtractData, setWhereToExtractData }: Props) {
   const [gameToForecastGroup, setgameToForecastGroup] = useState<Group>("GHANA")
   const [gameToForecast, setgameToForecast] = useState("Select")
   const [operation, setOperation] = useState("MANUAL")
@@ -31,20 +38,22 @@ function TwoWeeksFilter({ data, setData }: Props) {
   const [pattern, setPattern] = useState<TwoWeeksPatterns>("TwoPosTwoPos")
   const [numsOfweeksToAdd, setnumsOfWeeksToAdd] = useState("3")
   const [numsOfweeksApart, setnumsOfWeeksApart] = useState("1")
-  const [whereToExtractData, setWhereToExtractData] = useState<WhereToSearch>("Winning")
+
+  const { twoWeekDataValidator } = useValidators()
   const dispatch = useAppDispatch()
-  const { loading, error, targetEvents } = useAppSelector((state) => state.gameEvents)
-  const eventsToSend = [...targetEvents].reverse().slice(-2) as WinningOrMachineEvent[]
+  const { loading, error, gameEvents } = useAppSelector((state) => state.gameEvents)
+  const events = gameEvents.slice(-2) as GameTypes[]
+  const eventsToSend = events.map((event) => event[whereToExtractData])
 
   useEffect(() => {
     if (!gameToForecast || gameToForecast === "Select" || !numsOfweeksApart || !whereToExtractData) {
       return
     }
-    dispatch(getGameEventsAsync({ game: gameToForecast as Games, weeksApart: parseInt(numsOfweeksApart), whereToExtractData }))
+    dispatch(getGameEventsAsync({ game: gameToForecast as Games, weeksApart: parseInt(numsOfweeksApart) }))
   }, [gameToForecast, numsOfweeksApart, whereToExtractData])
 
-  const payloadObj = (): TwoWeeksPayload => {
-    return {
+  const payloadObj = (): TwoWeeksPayload | ErrorObj => {
+    const payload = {
       secondToLastEvent: eventsToSend[0],
       lastEvent: eventsToSend[1],
       game: gameToSearch,
@@ -55,6 +64,12 @@ function TwoWeeksFilter({ data, setData }: Props) {
       whereToExtract: whereToExtractData,
       gameToForecast: gameToForecast as Games,
     }
+
+    const isValid = twoWeekDataValidator(payload)
+    if (isValid?.err) {
+      return isValid
+    }
+    return payload
   }
 
   const path = operation === "MANUAL" ? "games/two_weeks/manual-search" : "games/two_weeks/auto-search"
@@ -103,7 +118,17 @@ function TwoWeeksFilter({ data, setData }: Props) {
           <LastThreeEvents />
         </section>
         <section>
-          {eventsToSend.length > 1 && <SendEvents eventsToSend={eventsToSend as WinningOrMachineEvent[]} numOfResultsToUse={2} path={path} payloadObj={payloadObj} setData={setData} data={data} />}
+          {eventsToSend.length > 1 && (
+            <SendEvents path={path} payloadObj={payloadObj} setData={setData} data={data}>
+              {
+                <div className={styles.eventsToSend}>
+                  {eventsToSend.map((event, index) => (
+                    <StaticFiveBoxies key={index} event={event} />
+                  ))}
+                </div>
+              }
+            </SendEvents>
+          )}
         </section>
       </div>
     </>

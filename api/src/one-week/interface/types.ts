@@ -1,6 +1,6 @@
 import { GameTypes, Games, Group, WinningOrMachineEvent } from 'src/games/interface/types'
 
-type OneWeekPattern = 'TwoWinTwoMac' | 'TwoWinOneMac' | 'OneWinTwoMac' | 'OneWinOneMac'
+type OneWeekPattern = 'TwoWinTwoMac' | 'TwoWinOneMac' | 'OneWinTwoMac' | 'OneWinOneMac' | 'TwoWinMacAny'
 
 type OneWeekEvent = Pick<GameTypes, 'Winning' | 'Machine'>
 

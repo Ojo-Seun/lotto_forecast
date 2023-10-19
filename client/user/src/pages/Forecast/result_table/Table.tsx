@@ -3,10 +3,11 @@ import styles from "./Table.module.css"
 import DataRows from "./DataRows"
 import EndOfGame from "./EndOfGame"
 import Pagination from "../pagination/Pagination"
-import { ResultType } from "../../../utils/type"
+import { ResultType, WhereToSearch } from "../../../utils/type"
 
 interface Props {
   result: ResultType[]
+  whereToExtractData?: WhereToSearch
 }
 
 const getPageNums = (pageLenght: number) => {
@@ -17,7 +18,7 @@ const getPageNums = (pageLenght: number) => {
   return pages
 }
 
-function Table({ result }: Props) {
+function Table({ result, whereToExtractData }: Props) {
   const [page, setPage] = useState(1)
   const tableRef = useRef<HTMLDivElement>(null)
 
@@ -73,7 +74,7 @@ function Table({ result }: Props) {
               {dataToRender.map(({ game, end }, index) => {
                 return (
                   <Fragment key={index}>
-                    <DataRows games={game} key={index} />
+                    <DataRows whereToExtractData={whereToExtractData} games={game} key={index} />
                     <EndOfGame />
                   </Fragment>
                 )

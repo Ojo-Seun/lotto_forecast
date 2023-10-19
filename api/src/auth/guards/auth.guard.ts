@@ -10,7 +10,6 @@ export class AuthGuard implements CanActivate {
     const req = context.switchToHttp().getRequest()
     try {
       const token = this.extractTokenFromHeader(req)
-      if (!token) return false
       const payload = await this.verifyToken(token)
       req['user'] = payload
       return true
@@ -21,17 +20,21 @@ export class AuthGuard implements CanActivate {
 
   private extractTokenFromHeader(req: Request) {
     const [type, token] = req.headers.authorization?.split(' ') ?? []
-    return type === 'Bearer' && token ? token : null
+    const isToken = type === 'Bearer' && token ? token : null
+    if (isToken) {
+      return token
+    }
+    throw new UnauthorizedException({ success: false, message: 'token is required' })
   }
 
   private async verifyToken(token: string) {
-    const secret = this.configService.get('JWT_SECRETE')
+    const secret = this.configService.get('JWT_SECRET')
 
     try {
       const payload = await this.jwtService.verifyAsync(token, { secret })
       return payload
     } catch (err) {
-      throw new UnauthorizedException({ success: false, cause: 'Invalid or expired token', statusCode: 401, message: err.message })
+      throw new UnauthorizedException({ success: false, message: 'Invalid or expired token', statusCode: 401, cause: err.message })
     }
   }
 }

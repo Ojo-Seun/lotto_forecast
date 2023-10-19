@@ -27,7 +27,7 @@ export class GameTypes {
   _id?: string
   target?: boolean
   level?: EventLevel
-  searchedIn?: WhereToSearch
+  searchedIn?: WhereToSearch | 'Both'
   direction?: Direction
   weeksApart?: number
   Ev: number

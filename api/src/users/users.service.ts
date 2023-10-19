@@ -5,6 +5,7 @@ import { User } from './schema/user.schema'
 import { Model } from 'mongoose'
 
 import { USER } from './interface/user.interface'
+import { ResetPassDto } from 'src/auth/dto/reset-pass.dto'
 
 @Injectable()
 export class UsersService {
@@ -19,24 +20,25 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return `This action returns all users`
-  }
-
   async findByEmail(email: string) {
     const user = await this.userModel.findOne({ email })
     return user
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`
+  async resetPassword(payload: ResetPassDto) {
+    try {
+      const { email, code, password } = payload
+      const user = await this.userModel.findOne({ email })
+      if (!user?.email) {
+        throw new UnauthorizedException('user does not exist')
+      }
+      // Update user
+      const updateUser = await this.userModel.findOneAndUpdate({ email }, { code, password })
+      if (updateUser?._id) {
+        return true
+      }
+    } catch (error) {
+      throw new UnauthorizedException(error.message)
+    }
   }
 }

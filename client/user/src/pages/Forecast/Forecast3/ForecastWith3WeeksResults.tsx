@@ -5,7 +5,7 @@ import styles from "../Forecast.module.css"
 import { motion } from "framer-motion"
 import { RoutesVariants } from "../../../utils/motionVariants"
 import ThreeWeeksFilter from "./ThreeWeeksFilter"
-import { ResultType } from "../../../utils/type"
+import { ResultType, WhereToSearch } from "../../../utils/type"
 import Table from "../result_table/Table"
 
 const head = {
@@ -20,13 +20,14 @@ const dataInitialState = {
 }
 
 function ForecastWith3WeeksResults() {
+  const [whereToExtractData, setWhereToExtractData] = useState<WhereToSearch>("Winning")
   const [data, setData] = useState(dataInitialState)
   useHead(head)
   return (
     <motion.div className={styles.container} variants={RoutesVariants} initial={"initial"} animate={"animate"} exit={"exit"}>
       <p className={styles.title}>Forecast With Last 3 Weeks Results</p>
-      <ThreeWeeksFilter data={data} setData={setData} />
-      <>{data?.data.length > 0 && <Table result={data.data} />}</>
+      <ThreeWeeksFilter whereToExtractData={whereToExtractData} setWhereToExtractData={setWhereToExtractData} data={data} setData={setData} />
+      <>{data?.data.length > 0 && <Table whereToExtractData={whereToExtractData} result={data.data} />}</>
     </motion.div>
   )
 }

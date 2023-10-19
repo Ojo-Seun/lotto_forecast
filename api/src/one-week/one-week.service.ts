@@ -6,10 +6,18 @@ import { TwoWinTwoMac } from './one-week-patterns-service/two-win-two-mac'
 import { OneWinTwoMac } from './one-week-patterns-service/one-win-two-mac'
 import { TwoWinOneMac } from './one-week-patterns-service/two-win-one-mac'
 import { OneWinOneMac } from './one-week-patterns-service/one-win-one-mac'
+import { TwoWinMacAny } from './one-week-patterns-service/two-win-mac-any'
 
 @Injectable()
 export class OneWeekService {
-  constructor(private readonly groupSelectionService: GroupSelectionService, private readonly twoWinTwoMac: TwoWinTwoMac, private readonly oneWinTwoMac: OneWinTwoMac, private readonly twoWinOneMac: TwoWinOneMac, private readonly oneWinOneMac: OneWinOneMac) {}
+  constructor(
+    private readonly groupSelectionService: GroupSelectionService,
+    private readonly twoWinTwoMac: TwoWinTwoMac,
+    private readonly oneWinTwoMac: OneWinTwoMac,
+    private readonly twoWinOneMac: TwoWinOneMac,
+    private readonly oneWinOneMac: OneWinOneMac,
+    private readonly twoWinMacAny: TwoWinMacAny,
+  ) {}
   async search(payload: PayloadOneWeekDto) {
     const pattern = payload.pattern
     let patternFns: PatternFns
@@ -26,6 +34,9 @@ export class OneWeekService {
         break
       case 'OneWinOneMac':
         patternFns = this.oneWinOneMac
+        break
+      case 'TwoWinMacAny':
+        patternFns = this.twoWinMacAny
         break
       default:
         throw new HttpException('Invalid one-week-search pattern', HttpStatus.BAD_REQUEST)

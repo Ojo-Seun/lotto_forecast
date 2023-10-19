@@ -25,9 +25,7 @@
 }
 
 #chart {
-  border-left: 2px solid var(--secondary_color);
-  border-right: 2px solid var(--secondary_color);
-  margin: 4em 0;
+  margin: 2em 0;
 }
 
 #gameInfo {
@@ -54,24 +52,28 @@
   scroll-behavior: smooth;
 }
 
-#table thead tr th:not(.event) {
-  text-align: left;
+#table thead tr th,
+#table tbody tr td {
   width: 7%;
+  text-align: center;
 }
-.event {
-  width: 10em;
+
+#table thead tr {
+  background-color: #282c34;
+  padding: 0.5em;
 }
+
+#table thead tr th {
+  color: white;
+}
+
 .boundary {
   border-right: 2px solid black;
 }
 .bold {
   font-weight: bold;
 }
-#table tbody tr td:not(.boundary, .box) {
-  width: 7%;
-}
 
 .box {
-  width: 0.5em;
   font-weight: bold;
 }

@@ -49,6 +49,7 @@ const premmiers: Readonly<string[]> = [
   "VAG",
 ]
 const ghanas: Readonly<string[]> = ["NATIONAL", "BONANZA", "LUCKY G", "FORTUNE", "MID WEEK", "MSP"]
+const oneWeekPatterns: Readonly<string[]> = ["TwoWinTwoMac", "TwoWinOneMac", "OneWinTwoMac", "OneWinOneMac", "TwoWinMacAny"]
 const threeWeeksPatterns: Readonly<string[]> = [
   "TwoOneTwoAny",
   "TwoPosOneAnyTwoAny",
@@ -61,6 +62,7 @@ const threeWeeksPatterns: Readonly<string[]> = [
   "TwoCloseTwoCloseOneAny",
   "TwoPosTwoCloseOneAny",
   "TwoOneOnePos",
+  "OneOneOnePos",
 ]
 const twoWeeksPatterns: Readonly<string[]> = ["TwoCloseTwoClose", "TwoPosOnePos", "TwoPosTwoPos", "TwoCloseTwoClosePos", "TwoCloseTwoPos", "TwoCloseTwoAny", "TwoPosTwoClose"]
 
@@ -89,4 +91,4 @@ const gameDetailsInitialData = {
 }
 
 const whereToSearch = ["Winning", "Machine"]
-export { games, groups, threeWeeksPatterns, twoWeeksPatterns, ghanas, premmiers, weeksApart, weeksToAdd, twoWeeksOperations, defaultEvents, gameDetailsInitialData, whereToSearch }
+export { games, groups, threeWeeksPatterns, oneWeekPatterns, twoWeeksPatterns, ghanas, premmiers, weeksApart, weeksToAdd, twoWeeksOperations, defaultEvents, gameDetailsInitialData, whereToSearch }

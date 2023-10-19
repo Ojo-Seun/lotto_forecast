@@ -59,7 +59,7 @@ export class MatchFnService {
   }
 
   /**
-   * search for one number at any position
+   * Check if two arrays has atleast one common element at any index
    * @param targetEventObj
    * @param events
    * @param eventLevel
@@ -68,8 +68,8 @@ export class MatchFnService {
    */
 
   async oneNumsAnyPos(targetEventObj: GameTypes, event: number[], whereToSearch: WhereToSearch): Promise<boolean> {
-    // Has five elements in the array
-    const targetEvent = targetEventObj[whereToSearch] // Has five elements in the array
+    // Target has five elements in the array
+    const targetEvent = targetEventObj[whereToSearch]
     // target may contains 0 which means absent of data.
     if (targetEvent[0] === 0) return false
     // Set will not store duplicate values

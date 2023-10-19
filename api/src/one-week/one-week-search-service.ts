@@ -57,10 +57,9 @@ export class OneWeekSearchService {
         if (isMatchInWin) {
           const isMatchInMac = await matchFns.isMatchInMac(game[lastIndex], macEvent, 'Machine')
           if (isMatchInMac) {
-            game[lastIndex] = { ...this.extractPropertyFromObj(game[lastIndex]), weeksApart: 0, direction: 'down' }
+            game[lastIndex] = { ...this.extractPropertyFromObj(game[lastIndex]), weeksApart: 0, direction: 'down', searchedIn: 'Both' }
             const start = i - numOfWeeksToAdd < 0 ? 0 : i - numOfWeeksToAdd
             const end = numOfWeeksToAdd + i > game.length ? game.length : i + numOfWeeksToAdd
-            console.log({ start, end })
             const arr = game.slice(start, end)
 
             result = [...result, ...arr]
@@ -70,8 +69,6 @@ export class OneWeekSearchService {
 
       return result
     } catch (error: any) {
-      console.log({ error: error.message, from: 'occured in search function in OneWeekSearchService' })
-
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
@@ -93,7 +90,6 @@ export class OneWeekSearchService {
     }
     let result: ResultType[] = []
     const res = await this.search(game, queries, matchFns)
-    console.log(res.length)
     if (res.length > 0) {
       result.push({ game: res, end: true })
     }

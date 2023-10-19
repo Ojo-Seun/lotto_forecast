@@ -1,11 +1,10 @@
 import { useState } from "react"
-import Luck from "../../../components/utils/Luck"
 import styles from "../Forecast.module.css"
 import useHead from "../../../hooks/useHead"
 import TwoWeeksFilter from "./TwoWeeksFilter"
 import { motion } from "framer-motion"
 import { RoutesVariants } from "../../../utils/motionVariants"
-import { ResultType } from "../../../utils/type"
+import { ResultType, WhereToSearch } from "../../../utils/type"
 import Table from "../result_table/Table"
 
 const head = {
@@ -20,6 +19,7 @@ const dataInitialState = {
 }
 
 function ForecastWith2WeeksResults() {
+  const [whereToExtractData, setWhereToExtractData] = useState<WhereToSearch>("Winning")
   const [data, setData] = useState(dataInitialState)
   let tableData = data.data
 
@@ -27,8 +27,8 @@ function ForecastWith2WeeksResults() {
   return (
     <motion.div className={styles.container} variants={RoutesVariants} initial={"initial"} animate={"animate"} exit={"exit"}>
       <p className={styles.title}>Forecast With Last 2 Weeks Results</p>
-      <TwoWeeksFilter data={data} setData={setData} />
-      <>{tableData?.length > 0 && <Table result={tableData} />}</>
+      <TwoWeeksFilter whereToExtractData={whereToExtractData} setWhereToExtractData={setWhereToExtractData} data={data} setData={setData} />
+      <>{tableData?.length > 0 && <Table whereToExtractData={whereToExtractData} result={tableData} />}</>
     </motion.div>
   )
 }

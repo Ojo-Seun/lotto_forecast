@@ -9,34 +9,54 @@ import ErrorNotification from "../../../components/error/ErrorNotification"
 import SendEvents from "../SendEvents"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { getGameEventsAsync } from "../../../features/getEvents/getEventsSlice"
+import useValidators from "../../../hooks/useValidators"
+import StaticFiveBoxies from "../../../components/utils/ten-boxies-nums/StaticFiveBoxies"
 
-interface Props {
-  setData: React.Dispatch<React.SetStateAction<{ loading: boolean; error: { err: boolean; message: string }; data: ResultType[] }>>
-  data: { loading: boolean; error: { err: boolean; message: string }; data: ResultType[] }
+interface ErrorObj {
+  err: boolean
+  message: string
+}
+interface State {
+  loading: boolean
+  error: ErrorObj
+  data: ResultType[]
 }
 
-function ThreeWeeksFilter({ data, setData }: Props) {
+interface Props {
+  setData: React.Dispatch<React.SetStateAction<State>>
+  data: State
+}
+
+interface Props {
+  setData: React.Dispatch<React.SetStateAction<State>>
+  data: State
+  setWhereToExtractData: React.Dispatch<React.SetStateAction<WhereToSearch>>
+  whereToExtractData: WhereToSearch
+}
+
+function ThreeWeeksFilter({ data, setData, whereToExtractData, setWhereToExtractData }: Props) {
   const [gameToForecastGroup, setgameToForecastGroup] = useState<Group>("GHANA")
   const [gameToForecast, setgameToForecast] = useState("Select")
   const [groupToSearch, setGroupToSearch] = useState<ThreeWeeksPayload["group"]>("ALL")
   const [gameToSearch, setGameToSearch] = useState<ThreeWeeksPayload["game"]>("ALL")
   const [pattern, setPattern] = useState<ThreeWeeksPatterns>("TwoPosOneAnyTwoCloseAny")
   const [numsOfweeksToAdd, setnumsOfWeeksToAdd] = useState("3")
-  const [whereToExtractData, setWhereToExtractData] = useState<WhereToSearch>("Winning")
   const dispatch = useAppDispatch()
-  const { loading, error, targetEvents } = useAppSelector((state) => state.gameEvents)
-  const eventsToSend = [...targetEvents].reverse().slice(-3) as WinningOrMachineEvent[]
+  const { loading, error, gameEvents } = useAppSelector((state) => state.gameEvents)
+  const events = gameEvents.slice(-3) as GameTypes[]
+  const eventsToSend = events.map((event) => event[whereToExtractData])
+  const { threeWeekDataValidator } = useValidators()
   const numsOfweeksApart = 3
 
   useEffect(() => {
     if (!gameToForecast || gameToForecast === "Select" || !numsOfweeksApart || !whereToExtractData) {
       return
     }
-    dispatch(getGameEventsAsync({ game: gameToForecast as Games, weeksApart: numsOfweeksApart, whereToExtractData }))
+    dispatch(getGameEventsAsync({ game: gameToForecast as Games, weeksApart: numsOfweeksApart }))
   }, [gameToForecast, whereToExtractData])
 
-  const payloadObj = (): ThreeWeeksPayload => {
-    return {
+  const payloadObj = (): ThreeWeeksPayload | ErrorObj => {
+    const payload = {
       thirdToLastEvent: eventsToSend[0],
       secondToLastEvent: eventsToSend[1],
       lastEvent: eventsToSend[2],
@@ -46,6 +66,12 @@ function ThreeWeeksFilter({ data, setData }: Props) {
       pattern: pattern,
       gameToForecast: gameToForecast as Games,
     }
+
+    const isValid = threeWeekDataValidator(payload)
+    if (isValid?.err) {
+      return isValid
+    }
+    return payload
   }
 
   const path = "games/Three_weeks/search"
@@ -89,7 +115,17 @@ function ThreeWeeksFilter({ data, setData }: Props) {
         <section>
           <LastThreeEvents />
         </section>
-        <section>{eventsToSend.length > 2 && <SendEvents eventsToSend={eventsToSend} numOfResultsToUse={3} path={path} payloadObj={payloadObj} setData={setData} data={data} />}</section>
+        <section>
+          {eventsToSend.length > 2 && (
+            <SendEvents path={path} payloadObj={payloadObj} setData={setData} data={data}>
+              <div className={styles.eventsToSend}>
+                {eventsToSend.map((event, index) => (
+                  <StaticFiveBoxies key={index} event={event} />
+                ))}
+              </div>
+            </SendEvents>
+          )}
+        </section>
       </div>
     </>
   )

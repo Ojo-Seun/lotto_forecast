@@ -1,7 +1,7 @@
 import { OneWeekPayload } from 'src/one-week/interface/types'
 import { GameTypes, Games, Group, WinningOrMachineEvent } from '../interface/types'
 
-type ThreeWeeksPatterns = 'TwoOneTwoAny' | 'TwoPosOneAnyTwoAny' | 'TwoPosTwoAnyOneAny' | 'TwoTwoOneAny' | 'TwoTwoTwoAny' | 'TwoTwoTwoPos' | 'TwoPosOneAnyTwoCloseAny' | 'TwoCloseOneTwoCloseAny' | 'TwoCloseTwoCloseOneAny' | 'TwoPosTwoCloseOneAny' | 'TwoOneOnePos'
+type ThreeWeeksPatterns = 'TwoOneTwoAny' | 'TwoPosOneAnyTwoAny' | 'TwoPosTwoAnyOneAny' | 'TwoTwoOneAny' | 'TwoTwoTwoAny' | 'TwoTwoTwoPos' | 'TwoPosOneAnyTwoCloseAny' | 'TwoCloseOneTwoCloseAny' | 'TwoCloseTwoCloseOneAny' | 'TwoPosTwoCloseOneAny' | 'TwoOneOnePos' | 'OneOneOnePos'
 type TwoWeeksPatterns = 'TwoCloseTwoClose' | 'TwoPosOnePos' | 'TwoPosTwoPos' | 'TwoCloseTwoAny' | 'TwoCloseTwoClosePos' | 'TwoCloseTwoPos' | 'TwoPosTwoClose'
 type Patterns = ThreeWeeksPatterns | TwoWeeksPatterns
 type WhereToSearch = 'Winning' | 'Machine'

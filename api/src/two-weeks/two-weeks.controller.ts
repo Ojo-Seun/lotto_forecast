@@ -4,8 +4,10 @@ import { TwoWeeksService } from './two-weeks.service'
 import { ApiBody, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { TwoWeeksDataPayloadPipe } from './pipes/twoWeeksDataPipe'
 import { ErrorObjectService } from 'src/global-utils/error-object.service'
+import { Auth } from 'src/auth/decorators/auth.decorator'
 
 @Controller('games/two_weeks')
+@Auth('SUBSCRIBER')
 @ApiTags('Game Forecast With Last 2 Weeks Results')
 export class TwoWeeksController {
   constructor(private readonly twoWeeksService: TwoWeeksService, private readonly errorService: ErrorObjectService) {}

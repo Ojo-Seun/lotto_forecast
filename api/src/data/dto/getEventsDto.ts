@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Games, WhereToSearch } from 'src/games/interface/types'
+import { Games } from 'src/games/interface/types'
 import { games } from 'src/games/utils/util'
 
 export class GetEventsDTO {
@@ -7,6 +7,4 @@ export class GetEventsDTO {
   game: Games
   @ApiProperty({ type: Number, required: true, name: 'weeksApart' })
   weeksApart: number
-  @ApiProperty({ enum: ['Winning', 'Machine'], required: true, name: 'whereToExtractData' })
-  whereToExtractData: WhereToSearch
 }

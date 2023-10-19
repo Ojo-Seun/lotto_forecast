@@ -11,6 +11,8 @@ import { GetChartDTO } from 'src/data/dto/get-chartDto'
 import { GetYearsDTO } from 'src/data/dto/get-yearsDto'
 import { OneWeekPayload } from 'src/one-week/interface/types'
 import { oneWeekPatterns } from 'src/one-week/utils/repo'
+import { ResetPassDto } from 'src/auth/dto/reset-pass.dto'
+import { SendPassResetCodeDto } from 'src/auth/dto/send-pass-reset-code.dto'
 
 @Injectable()
 export class Validators {
@@ -140,25 +142,39 @@ export class Validators {
     const isValidEmail = this.regexValidator('email', email, this.emailFormat)
     const isValidPassword = this.regexValidator('password', password, this.passFormat)
     const allIsValid = isValidEmail ?? isValidPassword
-    if (allIsValid?.err) {
-      return allIsValid
-    }
-    return null
+    return allIsValid
   }
 
+  resetPassValidator(payload: ResetPassDto) {
+    const keys = ['email', 'code', 'password']
+    const isValidKeys = this.keysValidator(keys, payload)
+    if (isValidKeys?.err) return isValidKeys
+    const { email, code, password } = payload
+    const isValidCode = this.regexValidator('code', code, this.codeFormat)
+    const isValid = this.loginInputsValidator({ email, password })
+    const allIsValid = isValidCode ?? isValid
+    return allIsValid
+  }
+
+  sendPassResetCodeValidator(payload: SendPassResetCodeDto) {
+    const keys = ['email', 'code']
+    const isValidKeys = this.keysValidator(keys, payload)
+    if (isValidKeys?.err) return isValidKeys
+    const { email, code } = payload
+    const isValidCode = this.regexValidator('code', code, this.codeFormat)
+    const isValidEmail = this.regexValidator('email', email, this.emailFormat)
+    const allIsValid = isValidCode ?? isValidEmail
+    return allIsValid
+  }
   registerInputsValidator(payload: CreateUserDto) {
     const keys = ['name', 'email', 'password', 'code']
     const isValidKeys = this.keysValidator(keys, payload)
     if (isValidKeys?.err) return isValidKeys
     const { name, email, password, code } = payload
     const isValidName = this.regexValidator('name', name, this.nameFormat)
-    const isValid = this.loginInputsValidator({ email, password })
-    const isValidCode = this.regexValidator('code', code, this.codeFormat)
-    const allIsValid = isValidName ?? isValid ?? isValidCode
-    if (allIsValid?.err) {
-      return allIsValid
-    }
-    return null
+    const isValid = this.resetPassValidator({ email, code, password })
+    const allIsValid = isValidName ?? isValid
+    return allIsValid
   }
 
   sendMailInputsValidator(payload: SendEmailDto) {
@@ -169,10 +185,7 @@ export class Validators {
     const isValidName = this.regexValidator('name', name, this.nameFormat)
     const isValidEmail = this.regexValidator('email', email, this.emailFormat)
     const allIsValid = isValidName ?? isValidEmail
-    if (allIsValid?.err) {
-      return allIsValid
-    }
-    return null
+    return allIsValid
   }
 
   threeWeekDataValidator(data: ThreeWeeksPayload) {

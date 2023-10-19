@@ -12,7 +12,7 @@ export class LoginPipe implements PipeTransform<LoginDto, LoginDto> {
     }
     const isValid = this.validatorService.loginInputsValidator(value)
     if (isValid?.err) {
-      throw new UnauthorizedException({ success: false, cause: isValid.message })
+      throw new UnauthorizedException({ success: false, message: isValid.message })
     }
     return value
   }

@@ -7,7 +7,7 @@ import ErrorNotification from "../error/ErrorNotification"
 import LoadingIndicator from "../utils/LodingIndicator"
 const path = "games/data/years"
 
-const initialValues = {
+const initialState = {
   error: { err: false, message: "" },
   loading: false,
   data: [] as number[],
@@ -21,8 +21,8 @@ interface Props {
 }
 
 function ChartFilter({ game, setGame, year, setYear }: Props) {
-  const [gameYears, setGameYears] = useState(initialValues)
-  const [fetch] = useFetch({ path, payload: { game }, setStatus: setGameYears, initialData: [], operation: "post" })
+  const [gameYears, setGameYears] = useState(initialState)
+  const [fetch] = useFetch<number[]>({ operation: "post", payload: { game }, path, initailValue: initialState.data, setStatus: setGameYears })
 
   useEffect(() => {
     if (game === "Select") return

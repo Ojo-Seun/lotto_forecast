@@ -3,6 +3,7 @@
   background-color: var(--primary_color_dark);
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .header :is(.logo, .mode) {

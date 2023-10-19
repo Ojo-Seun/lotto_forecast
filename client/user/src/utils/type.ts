@@ -50,7 +50,7 @@ export interface GameTypes {
   Ev: number
   direction?: Direction
   target?: boolean
-  searchedIn?: WhereToSearch
+  searchedIn?: WhereToSearch | "Both"
   weeksApart?: number
   _id?: string
 }
@@ -59,7 +59,6 @@ type Group = "PREMMIER" | "GHANA"
 interface GetEvents {
   game: Games
   weeksApart: number
-  whereToExtractData: WhereToSearch
 }
 type ThreeWeeksPatterns =
   | "TwoOneTwoAny"
@@ -73,8 +72,21 @@ type ThreeWeeksPatterns =
   | "TwoCloseTwoCloseOneAny"
   | "TwoPosTwoCloseOneAny"
   | "TwoOneOnePos"
+  | "OneOneOnePos"
 type TwoWeeksPatterns = "TwoCloseTwoClose" | "TwoPosOnePos" | "TwoPosTwoPos" | "TwoCloseTwoAny" | "TwoCloseTwoClosePos" | "TwoCloseTwoPos" | "TwoPosTwoClose"
 
+type OneWeekPatterns = "TwoWinTwoMac" | "TwoWinOneMac" | "OneWinTwoMac" | "OneWinOneMac" | "TwoWinMacAny"
+
+type OneWeekEvent = Pick<GameTypes, "Winning" | "Machine">
+interface OneWeekPayload {
+  lastEvent: OneWeekEvent
+  game: Games | "ALL"
+  group: Group | "ALL"
+  numOfWeeksToAdd: number
+  pattern: OneWeekPatterns
+
+  gameToForecast: Games
+}
 interface ThreeWeeksPayload {
   thirdToLastEvent: WinningOrMachineEvent
   secondToLastEvent: WinningOrMachineEvent
@@ -97,26 +109,33 @@ interface TwoWeeksPayload {
   whereToExtract: WhereToSearch
   gameToForecast: Games
 }
-type QueryTypes = TwoWeeksPayload | ThreeWeeksPayload
+type QueryTypes = TwoWeeksPayload | ThreeWeeksPayload | OneWeekPayload
 interface ResultType {
   game: GameTypes[]
   end: boolean
 }
 
-type Login = Omit<CreateUser, "name">
+type Login = Omit<CreateUser, "name" | "code">
 interface CreateUser {
   name: string
   email: string
   password: string
+  code: string
 }
-type SendEmail = Omit<CreateUser, "password">
-interface EmailVerification {
+type SendEmail = Omit<CreateUser, "password" | "code">
+type ResetPass = Omit<CreateUser, "name">
+interface SendPassResetCode {
   email: string
   code: string
 }
+type Role = "USER" | "SUBSCRIBER" | "ADMINISTRATOR"
+type Roles = Role[]
 
 export type {
-  EmailVerification,
+  ResetPass,
+  Roles,
+  Role,
+  SendPassResetCode,
   SendEmail,
   CreateUser,
   Login,
@@ -134,4 +153,7 @@ export type {
   ThreeWeeksPayload,
   TwoWeeksPatterns,
   ThreeWeeksPatterns,
+  OneWeekEvent,
+  OneWeekPatterns,
+  OneWeekPayload,
 }

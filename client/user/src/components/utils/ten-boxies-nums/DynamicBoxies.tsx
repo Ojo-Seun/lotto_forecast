@@ -8,13 +8,17 @@ interface Inputs {
   box4: number
 }
 interface Props {
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setInputs: React.Dispatch<React.SetStateAction<Inputs>>
 
   inputs: Inputs
 }
 
-function DynamicBoxies({ inputs, handleChange, onBlur }: Props) {
+function DynamicBoxies({ inputs, setInputs }: Props) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name
+    const value = parseInt(e.target.value)
+    setInputs((prev) => ({ ...prev, [name]: value }))
+  }
   return (
     <div className={styles.fiveDynamicBoxies}>
       <input
@@ -29,7 +33,6 @@ function DynamicBoxies({ inputs, handleChange, onBlur }: Props) {
         max={90}
         min={1}
         onChange={handleChange}
-        onBlur={onBlur}
       />
       <input
         required
@@ -43,7 +46,6 @@ function DynamicBoxies({ inputs, handleChange, onBlur }: Props) {
         max={90}
         min={1}
         onChange={handleChange}
-        onBlur={onBlur}
       />
       <input
         required
@@ -57,7 +59,6 @@ function DynamicBoxies({ inputs, handleChange, onBlur }: Props) {
         max={90}
         min={1}
         onChange={handleChange}
-        onBlur={onBlur}
       />
       <input
         required
@@ -71,7 +72,6 @@ function DynamicBoxies({ inputs, handleChange, onBlur }: Props) {
         max={90}
         min={1}
         onChange={handleChange}
-        onBlur={onBlur}
       />
       <input
         required
@@ -85,7 +85,6 @@ function DynamicBoxies({ inputs, handleChange, onBlur }: Props) {
         max={90}
         min={1}
         onChange={handleChange}
-        onBlur={onBlur}
       />
     </div>
   )

@@ -24,7 +24,7 @@ export class DataController {
   constructor(private readonly dataService: DataService, private readonly errorObj: ErrorObjectService) {}
 
   @Post()
-  //@Auth('ADMINISTRATOR')
+  @Auth('ADMINISTRATOR')
   @UsePipes(GameDetailsPipe)
   @ApiBody({ enum: games, required: true })
   async getGameDetails(@Body('payload') payload: GameDetailsDto) {
@@ -37,7 +37,7 @@ export class DataController {
   }
 
   @Post('game-events')
-  //@Auth('SUBSCRIBER')
+  @Auth('USER')
   @UsePipes(GetEventsDataPipe)
   @ApiBody({ type: GetEventsDTO })
   async getEvents(@Body('payload') payload: GetEventsDTO) {
@@ -63,7 +63,7 @@ export class DataController {
   }
 
   @Patch('insert_one')
-  // @Auth('ADMINISTRATOR')
+  @Auth('ADMINISTRATOR')
   @UsePipes(InserOnePipe)
   @ApiBody({ type: DataInsertOneDto })
   async insertOne(@Body('payload') data: DataInsertOneDto) {

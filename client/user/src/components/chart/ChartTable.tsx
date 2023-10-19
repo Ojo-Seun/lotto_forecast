@@ -14,13 +14,17 @@ function ChartTable({ data }: Props) {
         <tr className={styles.tableRows}>
           <th>Ev</th>
           <th>Date</th>
-          <th colSpan={5} className={styles.event}>
-            Winning
-          </th>
+          <th>W1</th>
+          <th>W2</th>
+          <th>W3</th>
+          <th>W4</th>
+          <th>W5</th>
           <th>Total</th>
-          <th colSpan={5} className={styles.event}>
-            Machine
-          </th>
+          <th>M1</th>
+          <th>M2</th>
+          <th>M3</th>
+          <th>M4</th>
+          <th>M5</th>
           <th>Total</th>
         </tr>
       </thead>

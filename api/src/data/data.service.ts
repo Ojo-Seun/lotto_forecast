@@ -27,20 +27,14 @@ export class DataService {
     }
   }
 
-  private getTargetEvents(events: GameTypes[], whereToExtractData: WhereToSearch) {
-    let targetEvents = events.map((event) => event[whereToExtractData])
-    return (targetEvents = targetEvents.reverse())
-  }
-
   async getEvents(payload: GetEvents) {
-    const { game, weeksApart, whereToExtractData } = payload
+    const { game, weeksApart } = payload
     try {
       const model = this.repoService.getModel(game)
       const games: GameTypes[] = (await model.find({})) ?? []
       const events = games.slice(weeksApart < 3 ? -3 : -weeksApart - 1)
       return {
         gameEvents: events,
-        targetEvents: this.getTargetEvents(events, whereToExtractData) ?? [],
       }
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.EXPECTATION_FAILED)
@@ -104,6 +98,18 @@ export class DataService {
     }
   }
 
+  isExist(newEvent: GameTypes, oldEvent: GameTypes) {
+    const newWinEvent = newEvent['Winning']
+    const oldWinEvent = oldEvent['Winning']
+    for (let i = 0; i < newWinEvent.length; i++) {
+      if (newWinEvent[i] !== oldWinEvent[i]) {
+        return false
+      }
+    }
+
+    return true
+  }
+
   async insertOne(game: Games, payload: GameTypes) {
     try {
       const model = this.repoService.getModel(game)
@@ -114,6 +120,11 @@ export class DataService {
 
       if (oldGame[0].Name !== payload.Name) {
         throw new HttpException(`${oldGame[0].Name} and ${payload.Name} did not match`, 500)
+      }
+
+      const isExist = this.isExist(payload, oldGame.slice(-1)[0])
+      if (isExist) {
+        throw new HttpException('event allready exist', 500)
       }
 
       const res = await model.bulkWrite([
